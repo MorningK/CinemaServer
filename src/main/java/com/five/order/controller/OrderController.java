@@ -20,21 +20,21 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-//    @PostMapping("/make")
-//    public MyMessage getCurrentSit(HttpSession session, int filmSessionId, String orderSit, double price) {
-//        Object userIdObj = session.getAttribute("userId");
-//        if (userIdObj == null) {
-//            return new MyMessage(0, "请登录");
-//        }
-//        int userId = (int)userIdObj;
-//        MyMessage messaage = orderService.makeOrder(userId, filmSessionId, orderSit, price);
-//        return messaage;
-//    }
-
     @PostMapping("/make")
-    public MyMessage getCurrentSit(int userId, int filmSessionId, String orderSit, double price) {
+    public MyMessage getCurrentSit(HttpSession session, int filmSessionId, String orderSit, double price) {
+        Object userIdObj = session.getAttribute("userId");
+        if (userIdObj == null) {
+            return new MyMessage(0, "请登录");
+        }
+        int userId = (int)userIdObj;
         MyMessage messaage = orderService.makeOrder(userId, filmSessionId, orderSit, price);
         return messaage;
     }
+
+//    @PostMapping("/make")
+//    public MyMessage getCurrentSit(int userId, int filmSessionId, String orderSit, double price) {
+//        MyMessage messaage = orderService.makeOrder(userId, filmSessionId, orderSit, price);
+//        return messaage;
+//    }
 
 }
