@@ -4,12 +4,14 @@ import com.five.cinema.dao.CinemaDao;
 import com.five.cinema.model.Cinema;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by msi on 2017/6/6.
  */
+@Service
 public class CinemaServieceImpl implements CinemaService  {
 
     @Autowired

@@ -37,4 +37,10 @@ public class OrderController {
         return messaage;
     }
 
+    @PostMapping("/sysupay")
+    public MyMessage payOrder(int orderId) {
+        MyMessage message = orderService.payOrder(orderId);
+        return message;
+    }
+
 }

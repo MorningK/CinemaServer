@@ -20,9 +20,4 @@ public class FilmController {
         return filmService.getFilm();
     }
 
-    @PostMapping("/filmsession")
-    public MyMessage getFilmSession(int filmId, int cinemaId, String time) {
-        return filmService.getFilmSession(filmId, cinemaId, time);
-    }
-
 }

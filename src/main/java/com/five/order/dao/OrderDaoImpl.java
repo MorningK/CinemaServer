@@ -20,8 +20,15 @@ public class OrderDaoImpl implements OrderDao {
         return orderRepository.save(order);
     }
 
+
+
     @Override
     public void orderOutOfDate(Reservation order) {
         orderRepository.save(order);
+    }
+
+    @Override
+    public int payById(int id) {
+        return orderRepository.findById(id, Reservation.PAID);
     }
 }

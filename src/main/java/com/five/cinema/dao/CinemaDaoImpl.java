@@ -3,6 +3,7 @@ package com.five.cinema.dao;
 import com.five.cinema.model.Cinema;
 import com.five.cinema.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by msi on 2017/6/6.
  */
+@Repository
 public class CinemaDaoImpl implements CinemaDao {
 
     @Autowired
