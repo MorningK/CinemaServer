@@ -23,4 +23,8 @@ public class ThreadPool {
     public void remove(Integer orderId) {
         threadPool.remove(orderId);
     }
+
+    public ClockThread get(Integer orderId) {
+        return threadPool.get(orderId);
+    }
 }

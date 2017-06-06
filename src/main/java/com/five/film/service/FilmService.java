@@ -1,5 +1,6 @@
 package com.five.film.service;
 
+import com.five.film.model.Film;
 import com.five.user.model.MyMessage;
 
 import java.sql.Timestamp;
@@ -9,5 +10,5 @@ import java.sql.Timestamp;
  */
 public interface FilmService {
     MyMessage getFilm();
-
+    Film findById(int id);
 }

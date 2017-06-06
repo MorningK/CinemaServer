@@ -1,36 +1,43 @@
-package com.five.filmRemark.model;
+package com.five.cinemaRemark.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.sql.Timestamp;
 
 /**
- * Created by haoye on 17-6-6.
+ * Created by msi on 2017/6/7.
  */
 @Entity
-public class FilmRemark {
-
+public class CinemaRemark {
     @Id
     @GeneratedValue
     private int id;
+
     @Column(nullable = false)
     private int userId;
     @Column(nullable = false)
-    private int filmId;
+    private int cinemaId;
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)
     private long time;
 
-    public FilmRemark() {}
+    public CinemaRemark() {}
 
-    public FilmRemark(int userId, int filmId, String content) {
+    public CinemaRemark(int userId, int cinemaId, String content) {
         this.userId = userId;
-        this.filmId = filmId;
+        this.cinemaId = cinemaId;
         this.content = content;
         this.time = System.currentTimeMillis();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
@@ -41,12 +48,12 @@ public class FilmRemark {
         this.userId = userId;
     }
 
-    public int getFilmId() {
-        return filmId;
+    public int getCinemaId() {
+        return cinemaId;
     }
 
-    public void setFilmId(int filmId) {
-        this.filmId = filmId;
+    public void setCinemaId(int cinemaId) {
+        this.cinemaId = cinemaId;
     }
 
     public String getContent() {
@@ -63,15 +70,5 @@ public class FilmRemark {
 
     public void setTime(long time) {
         this.time = time;
-    }
-
-    @Override
-    public String toString() {
-        return "filmRemark{" +
-                "userId=" + userId +
-                ", filmId=" + filmId +
-                ", content='" + content + '\'' +
-                ", time=" + time +
-                '}';
     }
 }

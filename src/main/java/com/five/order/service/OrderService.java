@@ -9,5 +9,7 @@ import com.five.user.model.MyMessage;
 public interface OrderService {
     MyMessage makeOrder(int userId, int filmSessionId, String orderSit, double price);
     void orderOutOfDate(Reservation order);
-    MyMessage payOrder(int orderId);
+
+    int UpdateStatusById(int id, int status);
+    Reservation findById(int id);
 }

@@ -6,12 +6,14 @@ import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by msi on 2017/6/6.
  */
 @Service
+@Transactional
 public class CinemaServieceImpl implements CinemaService  {
 
     @Autowired
@@ -47,5 +49,10 @@ public class CinemaServieceImpl implements CinemaService  {
         } else {
             return new MyMessage(1,head+total+tail);
         }
+    }
+
+    @Override
+    public Cinema findById(int id) {
+        return cinemaDao.findById(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.five.filmSession.service;
 
+import com.five.filmSession.model.FilmSession;
 import com.five.user.model.MyMessage;
 
 /**
@@ -7,4 +8,5 @@ import com.five.user.model.MyMessage;
  */
 public interface FilmSessionService {
     MyMessage getFilmSession(int filmId, int cinemaId, String time);
+    FilmSession findById(int id);
 }

@@ -1,5 +1,6 @@
 package com.five.hallSitting.controller;
 
+import com.five.filmSession.service.FilmSessionService;
 import com.five.hallSitting.model.Sits;
 import com.five.hallSitting.service.HallSittingService;
 import com.five.user.model.MyMessage;
@@ -17,14 +18,14 @@ public class HallSittingController {
 
     @Autowired
     private HallSittingService hallSittingService;
-//    @Autowired
-//    private FilmSessionService filmSessionService;
+
+    @Autowired
+    private FilmSessionService filmSessionService;
 
     @GetMapping("/sit")
     public Sits getCurrentSit(int filmSessionId) {
-        // TODO
-        //int hallSittingId = filmSessionService.....
-        int hallSittingId = 3;
+        int hallSittingId = filmSessionService.findById(filmSessionId).getHallSittingId();
+//        int hallSittingId = 3;
         Sits sits = hallSittingService.getCurrentSit(hallSittingId);
         return sits;
     }

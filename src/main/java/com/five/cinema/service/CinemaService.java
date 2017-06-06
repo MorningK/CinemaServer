@@ -1,5 +1,6 @@
 package com.five.cinema.service;
 
+import com.five.cinema.model.Cinema;
 import com.five.user.model.MyMessage;
 
 /**
@@ -8,4 +9,5 @@ import com.five.user.model.MyMessage;
 public interface CinemaService {
     MyMessage getCinemas(int citycode, double longtitude, double latitude);
     MyMessage getCinemas(int citycode, double longtitude, double latitude, int currentpage);
+    Cinema findById(int id);
 }

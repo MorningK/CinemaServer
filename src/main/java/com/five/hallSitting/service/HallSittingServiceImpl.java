@@ -9,10 +9,14 @@ import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Temporal;
+import javax.transaction.Transactional;
+
 /**
  * Created by haoye on 17-6-6.
  */
 @Service
+@Transactional
 public class HallSittingServiceImpl implements HallSittingService {
 
     @Autowired

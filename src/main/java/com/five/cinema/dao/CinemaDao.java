@@ -11,4 +11,5 @@ import java.util.List;
 public interface CinemaDao {
     List<Cinema> findByLocation(int citycode, double longtitude, double latitude, int currentpage);
     void save(Cinema cinema);
+    Cinema findById(int id);
 }

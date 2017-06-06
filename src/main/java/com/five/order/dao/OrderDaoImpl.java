@@ -28,7 +28,12 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public int payById(int id) {
-        return orderRepository.findById(id, Reservation.PAID);
+    public int UpdateStatusById(int id, int status) {
+        return orderRepository.findById(id, status);
+    }
+
+    @Override
+    public Reservation findById(int id) {
+        return orderRepository.findOne(id);
     }
 }

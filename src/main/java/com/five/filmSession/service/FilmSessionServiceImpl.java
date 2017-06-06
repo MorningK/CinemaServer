@@ -6,6 +6,7 @@ import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import static com.five.film.Util.FilmUtil.getTheEndOfDay;
  * Created by msi on 2017/6/6.
  */
 @Service
+@Transactional
 public class FilmSessionServiceImpl implements FilmSessionService {
 
     @Autowired
@@ -37,5 +39,10 @@ public class FilmSessionServiceImpl implements FilmSessionService {
         } else {
             return new MyMessage(1, head+total+tail);
         }
+    }
+
+    @Override
+    public FilmSession findById(int id) {
+        return filmSessionDao.findById(id);
     }
 }

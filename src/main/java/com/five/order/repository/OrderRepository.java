@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface OrderRepository extends JpaRepository<Reservation, Integer> {
 
-    @Transactional
     @Modifying
     @Query(value="update Reservation r set r.status=:newStatus where r.id=:rid")
     int findById(@Param("rid") int id, @Param("newStatus") int newStatus);

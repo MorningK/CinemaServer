@@ -52,4 +52,9 @@ public class CinemaDaoImpl implements CinemaDao {
     public void save(Cinema cinema) {
         cinemaRepository.save(cinema);
     }
+
+    @Override
+    public Cinema findById(int id) {
+        return cinemaRepository.findOne(id);
+    }
 }
