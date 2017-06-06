@@ -51,4 +51,12 @@ public class OrderServiceImpl implements OrderService {
         orderDao.orderOutOfDate(order);
     }
 
+    @Override
+    public MyMessage payOrder(int orderId) {
+        int result = orderDao.payById(orderId);
+        System.out.println(result);
+        if (result > 0) return new MyMessage(1, "支付成功");
+        else return new MyMessage(0, "支付失败");
+    }
+
 }
