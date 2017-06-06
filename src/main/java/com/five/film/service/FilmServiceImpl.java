@@ -5,6 +5,7 @@ import com.five.film.dao.FilmSessionDao;
 import com.five.film.model.FilmSession;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -15,6 +16,7 @@ import java.util.Date;
 /**
  * Created by msi on 2017/6/6.
  */
+@Service
 public class FilmServiceImpl implements FilmService {
 
     @Autowired
@@ -59,7 +61,7 @@ public class FilmServiceImpl implements FilmService {
             total += filmsession.toString();
         }
         if (total.length() == 0) {
-            return new MyMessage(0, "没有找到电影");
+            return new MyMessage(0, "没有找到场次");
         } else {
             return new MyMessage(1, head+total+tail);
         }
