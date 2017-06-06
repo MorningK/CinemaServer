@@ -1,7 +1,7 @@
-package com.five.film.dao;
+package com.five.filmSession.dao;
 
-import com.five.film.model.FilmSession;
-import com.five.film.repository.FilmSessionRepository;
+import com.five.filmSession.model.FilmSession;
+import com.five.filmSession.repository.FilmSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;

@@ -1,12 +1,8 @@
-package com.five.film.repository;
+package com.five.filmSession.repository;
 
-import com.five.film.model.Film;
-import com.five.film.model.FilmSession;
+import com.five.filmSession.model.FilmSession;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 

@@ -9,5 +9,5 @@ import java.sql.Timestamp;
  */
 public interface FilmService {
     MyMessage getFilm();
-    MyMessage getFilmSession(int filmId, int cinemaId, String time);
+
 }

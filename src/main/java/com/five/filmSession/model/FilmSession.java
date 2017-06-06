@@ -1,4 +1,4 @@
-package com.five.film.model;
+package com.five.filmSession.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

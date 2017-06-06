@@ -1,7 +1,6 @@
-package com.five.film.dao;
+package com.five.filmSession.dao;
 
-import com.five.film.model.FilmSession;
-import org.springframework.data.repository.query.Param;
+import com.five.filmSession.model.FilmSession;
 
 import java.sql.Timestamp;
 import java.util.List;
