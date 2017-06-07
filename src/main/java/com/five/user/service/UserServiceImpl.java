@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         if (user1 == null) { // 没有找到，可以注册
             User registeredUser = userDao.save(user);
 
-            MyMessage message = paymentService.addWalletForNewUserById(registeredUser.getId(), 100);
+            MyMessage message = (MyMessage) paymentService.addWalletForNewUserById(registeredUser.getId(), 100);
 
             return new MyMessage(1, "注册成功," + message.getMessage());
         }

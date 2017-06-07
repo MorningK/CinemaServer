@@ -20,8 +20,7 @@ public class PaymentController {
 
     @PostMapping("/sysupay")
     public Object payOrder(int orderId) {
-        MyMessage message = paymentService.payOrder(orderId);
-        return message;
+        return paymentService.payOrder(orderId);
     }
 
     @PostMapping("/createWallet")
