@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface FilmSessionDao {
     FilmSession findById(int id);
-    List<FilmSession> findByTime(Timestamp bt, Timestamp et);
+    List<Integer> findFilmIdByTime(Timestamp bt, Timestamp et);
     List<FilmSession> findByFilmAndCinemaAndTime(int filmId, int cinemaId, Timestamp bt, Timestamp et);
 }

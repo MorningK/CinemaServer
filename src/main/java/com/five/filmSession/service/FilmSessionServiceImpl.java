@@ -45,4 +45,9 @@ public class FilmSessionServiceImpl implements FilmSessionService {
     public FilmSession findById(int id) {
         return filmSessionDao.findById(id);
     }
+
+    @Override
+    public List<Integer> findFilmIdByTime(Timestamp bt, Timestamp et) {
+        return filmSessionDao.findFilmIdByTime(bt, et);
+    }
 }

@@ -1,5 +1,6 @@
 package com.five.filmSession.repository;
 
+import com.five.film.model.Film;
 import com.five.filmSession.model.FilmSession;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,7 @@ public interface FilmSessionRepository extends JpaRepository<FilmSession, Intege
     List<FilmSession> findByFilmIdAndCinemaIdAndBeginTimeGreaterThanAndEndTimeLessThen(@Param("fid") int filmId, @Param("cid") int cinemaId,
                                                                                        @Param("bt") Timestamp bt, @Param("et")  Timestamp et);
 
-    @Query(value = "select f from FilmSession f where f.beginTime >= :bt AND f.endTime <= :et")
-    List<FilmSession> findByBeginTimeGreaterThenAndEndTimeLessThen(@Param("bt") Timestamp bt,@Param("et") Timestamp et);
+    @Query(value = "select distinct f.filmId from FilmSession f where  f.beginTime >= :bt AND f.endTime <= :et")
+    List<Integer> findByBeginTimeGreaterThenAndEndTimeLessThen(@Param("bt") Timestamp bt,@Param("et") Timestamp et);
+
 }

@@ -24,7 +24,7 @@ public class FilmSessionDaoImpl implements FilmSessionDao {
     }
 
     @Override
-    public List<FilmSession> findByTime(Timestamp bt, Timestamp et) {
+    public List<Integer> findFilmIdByTime(Timestamp bt, Timestamp et) {
         return filmSessionRepository.findByBeginTimeGreaterThenAndEndTimeLessThen(bt, et);
     }
 
