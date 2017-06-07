@@ -13,6 +13,7 @@ import java.util.Date;
 /**
  * Created by msi on 2017/6/6.
  */
+
 @Entity
 public class Film {
     @Id
@@ -41,8 +42,7 @@ public class Film {
 
     public Film() {}
 
-    public Film(int id, String name, String summary, double score, String category, String nation, Timestamp publishTime, double lastTime, String actor, String director, String language) {
-        this.id = id;
+    public Film(String name, String summary, double score, String category, String nation, Timestamp publishTime, double lastTime, String actor, String director, String language) {
         this.name = name;
         this.summary = summary;
         this.score = score;
@@ -147,7 +147,7 @@ public class Film {
     public String toString() {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = format.format(publishTime);
-        return "Film{" +
+        return "{" +
                 "\"id\":"+Integer.toString(id)+
                 ", \"name\":\""+name+"\""+
                 ", \"summary\":\""+summary+"\""+

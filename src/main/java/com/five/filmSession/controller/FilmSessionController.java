@@ -17,7 +17,7 @@ public class FilmSessionController {
     private FilmSessionService filmSessionServiceService;
 
     @PostMapping("/filmsession")
-    public MyMessage getFilmSession(int filmId, int cinemaId, String time) {
+    public Object getFilmSession(int filmId, int cinemaId, String time) {
         return filmSessionServiceService.getFilmSession(filmId, cinemaId, time);
     }
 }

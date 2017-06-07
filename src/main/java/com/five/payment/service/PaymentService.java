@@ -7,15 +7,15 @@ import com.five.user.model.MyMessage;
  * Created by msi on 2017/6/6.
  */
 public interface PaymentService {
-    MyMessage payOrder(int orderId);
+    Object payOrder(int orderId);
 
     //Param:
     // balance : money
-    MyMessage addWalletForNewUserById(int userId, int balance);
+    Object addWalletForNewUserById(int userId, int balance);
     Wallet findByUserId(int userId);
 
-    MyMessage queryWallet(int userId);
+    Object queryWallet(int userId);
 
-    MyMessage updateWallet(int userId, double balance);
+    Object updateWallet(int userId, double balance);
 
 }

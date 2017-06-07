@@ -26,8 +26,7 @@ public class Cinema {
 
     public Cinema() {}
 
-    public Cinema(int id, String name, String address, String phone, double longtitude, double latitude, int cityCode) {
-        this.id = id;
+    public Cinema(String name, String address, String phone, double longtitude, double latitude, int cityCode) {
         this.name = name;
         this.address = address;
         this.phone = phone;

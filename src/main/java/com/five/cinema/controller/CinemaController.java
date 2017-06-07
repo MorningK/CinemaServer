@@ -17,12 +17,10 @@ public class CinemaController {
     private CinemaService cinemaService;
 
     @PostMapping("/cinema")
-    public MyMessage findCinema(int citycode, double longtitude, double latitude, HttpSession session) {
+    public Object findCinema(int citycode, double longtitude, double latitude, HttpSession session) {
         int currentpage = 0;
         if (session.getAttribute("page") != null) currentpage = Integer.parseInt(session.getAttribute("page").toString());
-        MyMessage message = cinemaService.getCinemas(citycode, longtitude, latitude, currentpage);
-//        System.out.println(session.getAttribute("userId"));
-        return message;
+        return cinemaService.getCinemas(citycode, longtitude, latitude, currentpage);
     }
 
 

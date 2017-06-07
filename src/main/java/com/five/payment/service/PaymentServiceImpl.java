@@ -29,7 +29,7 @@ public class PaymentServiceImpl implements PaymentService {
     private OrderService orderService;
 
     @Override
-    public MyMessage payOrder(int orderId) {
+    public Object payOrder(int orderId) {
         ClockThread clockThread = ThreadPool.getInstance().get(orderId);
         if (clockThread == null) return new MyMessage(0, "订单已过期");
         Reservation reservation = orderService.findById(orderId);
@@ -65,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public MyMessage addWalletForNewUserById(int userId, int balance) {
+    public Object addWalletForNewUserById(int userId, int balance) {
         Wallet wallet = findByUserId(userId);
         if (wallet == null) {
             if (wallet.getUserId() != -1) {
@@ -94,11 +94,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public MyMessage queryWallet(int userId) {
+    public Object queryWallet(int userId) {
         Wallet wallet = findByUserId(userId);
         if (wallet != null) {
             if (wallet.getUserId() != -1) {
-                return new MyMessage(1, wallet.toString());
+                return new MyMessage(1, wallet);
             } else {
                 return new MyMessage(0, "钱包异常，此用户拥有多个钱包");
             }
@@ -107,7 +107,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public MyMessage updateWallet(int userId, double balance) {
+    public Object updateWallet(int userId, double balance) {
         List<Wallet> wallets = walletDao.findWalletByUserId(userId);
         if (wallets == null) {
             return new MyMessage(0, "更新失败，钱包不存在");

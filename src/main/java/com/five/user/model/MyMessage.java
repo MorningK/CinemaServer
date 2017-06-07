@@ -9,11 +9,11 @@ import javax.servlet.http.HttpSession;
 public class MyMessage {
 
     private int status;
-    private String message;
+    private Object message;
 
     public MyMessage() {}
 
-    public MyMessage(int status, String message) {
+    public MyMessage(int status, Object message) {
         this.status = status;
         this.message = message;
     }
@@ -26,11 +26,11 @@ public class MyMessage {
         this.status = status;
     }
 
-    public String getMessage() {
+    public Object getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Object message) {
         this.message = message;
     }
 }

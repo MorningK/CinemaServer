@@ -35,8 +35,7 @@ public class FilmSession {
 
     public FilmSession() {}
 
-    public FilmSession(int id, String hall, Timestamp beginTime, Timestamp endTime, String classification, double price, int cinemaId, int hallSittingId, int filmId) {
-        this.id = id;
+    public FilmSession(String hall, Timestamp beginTime, Timestamp endTime, String classification, double price, int cinemaId, int hallSittingId, int filmId) {
         this.hall = hall;
         this.beginTime = beginTime;
         this.endTime = endTime;

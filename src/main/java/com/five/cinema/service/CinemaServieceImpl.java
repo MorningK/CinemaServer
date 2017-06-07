@@ -20,35 +20,14 @@ public class CinemaServieceImpl implements CinemaService  {
     private CinemaDao cinemaDao;
 
     @Override
-    public MyMessage getCinemas(int citycode, double longtitude, double latitude) {
-        String total = "", head = "{\"Cinema\":[", tail = "]}";
-        List<Cinema> cinemas = cinemaDao.findByLocation(citycode, longtitude, latitude, 0);
-        for (int i = 0; i < cinemas.size(); i++) {
-            String temp = cinemas.get(i).toString();
-            total += temp;
-            if (i != cinemas.size() - 1) total += ",";
-        }
-        if (total.length() == 0) {
-            return new MyMessage(0, "没有找到电影院");
-        } else {
-            return new MyMessage(1,head+total+tail);
-        }
-    }
-
-    @Override
-    public MyMessage getCinemas(int citycode, double longtitude, double latitude, int currentpage) {
+    public Object getCinemas(int citycode, double longtitude, double latitude, int currentpage) {
         String total = "", head = "{\"Cinema\":[", tail = "]}";
         List<Cinema> cinemas = cinemaDao.findByLocation(citycode, longtitude, latitude, currentpage);
         if (cinemas == null) return new MyMessage(0, "没有找到电影院");
-        for (int i = 0; i < cinemas.size(); i++) {
-            String temp = cinemas.get(i).toString();
-            total += temp;
-            if (i != cinemas.size() - 1) total += ",";
-        }
         if (total.length() == 0) {
             return new MyMessage(0, "没有找到电影院");
         } else {
-            return new MyMessage(1,head+total+tail);
+            return new MyMessage(1,cinemas);
         }
     }
 

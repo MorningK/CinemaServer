@@ -24,7 +24,7 @@ public class FilmSessionServiceImpl implements FilmSessionService {
     private FilmSessionDao filmSessionDao;
 
     @Override
-    public MyMessage getFilmSession(int filmId, int cinemaId, String time) {
+    public Object getFilmSession(int filmId, int cinemaId, String time) {
         Timestamp bt = Timestamp.valueOf(time);
         Date d = bt;
         Timestamp et= getTheEndOfDay(d);
