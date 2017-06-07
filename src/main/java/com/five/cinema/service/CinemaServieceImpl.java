@@ -20,17 +20,6 @@ public class CinemaServieceImpl implements CinemaService  {
     private CinemaDao cinemaDao;
 
     @Override
-    public Object getCinemas(int citycode, double longtitude, double latitude) {
-        String total = "", head = "{\"Cinema\":[", tail = "]}";
-        List<Cinema> cinemas = cinemaDao.findByLocation(citycode, longtitude, latitude, 0);
-        if (total.length() == 0) {
-            return new MyMessage(0, "没有找到电影院");
-        } else {
-            return new MyMessage(1,cinemas);
-        }
-    }
-
-    @Override
     public Object getCinemas(int citycode, double longtitude, double latitude, int currentpage) {
         String total = "", head = "{\"Cinema\":[", tail = "]}";
         List<Cinema> cinemas = cinemaDao.findByLocation(citycode, longtitude, latitude, currentpage);
