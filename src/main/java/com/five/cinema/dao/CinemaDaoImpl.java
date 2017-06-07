@@ -45,7 +45,14 @@ public class CinemaDaoImpl implements CinemaDao {
     public List<Cinema> findByLocation(int citycode, double longtitude, double latitude, int currentpage) {
         List<Cinema> cinemas = cinemaRepository.findByCitycode(citycode);
         Collections.sort(cinemas, new CompareLocation(longtitude, latitude));
-        return cinemas.subList(currentpage*10, currentpage*10+10);
+        int endpos = (currentpage+1)*10;
+        if (cinemas.size() < currentpage*10) return null;
+        else {
+            if (cinemas.size() < endpos) {
+                endpos = cinemas.size();
+            }
+            return cinemas.subList(currentpage*10, endpos);
+        }
     }
 
     @Override

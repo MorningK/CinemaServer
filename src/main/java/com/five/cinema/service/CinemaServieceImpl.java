@@ -39,6 +39,7 @@ public class CinemaServieceImpl implements CinemaService  {
     public MyMessage getCinemas(int citycode, double longtitude, double latitude, int currentpage) {
         String total = "", head = "{\"Cinema\":[", tail = "]}";
         List<Cinema> cinemas = cinemaDao.findByLocation(citycode, longtitude, latitude, currentpage);
+        if (cinemas == null) return new MyMessage(0, "没有找到电影院");
         for (int i = 0; i < cinemas.size(); i++) {
             String temp = cinemas.get(i).toString();
             total += temp;
