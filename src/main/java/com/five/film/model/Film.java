@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -15,7 +16,7 @@ import java.util.Date;
  */
 
 @Entity
-public class Film {
+public class Film implements Serializable {
     @Id
     @GeneratedValue
     private int id;

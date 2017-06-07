@@ -4,13 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Created by haoye on 17-6-7.
  */
 @Entity
-public class FilmPic {
+public class FilmPic implements Serializable {
 
     public static final int COVER = 1;
     public static final int STILL = 2;

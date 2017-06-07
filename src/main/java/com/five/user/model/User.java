@@ -1,17 +1,18 @@
 package com.five.user.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by haoye on 17-6-6.
  */
 @Entity
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue
     private int id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;

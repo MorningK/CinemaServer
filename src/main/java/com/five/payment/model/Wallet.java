@@ -4,12 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by msi on 2017/6/6.
  */
 @Entity
-public class Wallet {
+public class Wallet implements Serializable {
 
     @Id
     @GeneratedValue

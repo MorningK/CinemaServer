@@ -20,8 +20,6 @@ public class OrderDaoImpl implements OrderDao {
         return orderRepository.save(order);
     }
 
-
-
     @Override
     public void orderOutOfDate(Reservation order) {
         orderRepository.save(order);
@@ -29,7 +27,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public int UpdateStatusById(int id, int status) {
-        return orderRepository.findById(id, status);
+        return orderRepository.updateById(id, status);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.five.payment.service;
 
-import com.five.order.dao.OrderDao;
 import com.five.order.model.Reservation;
 import com.five.order.service.OrderService;
 import com.five.order.utils.ClockThread;
@@ -8,7 +7,6 @@ import com.five.order.utils.ThreadPool;
 import com.five.payment.dao.WalletDao;
 import com.five.payment.model.Wallet;
 import com.five.user.model.MyMessage;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -8,9 +8,7 @@ import com.five.hallSitting.utils.SitUtil;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.Temporal;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by haoye on 17-6-6.

@@ -1,13 +1,14 @@
 package com.five.order.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by haoye on 17-6-6.
  */
 @Entity
-public class Reservation {
+public class Reservation implements Serializable {
 
     public static final int NOTPAID = 1;
     public static final int PAID = 2;

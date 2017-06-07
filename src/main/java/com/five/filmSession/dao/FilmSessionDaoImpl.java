@@ -20,7 +20,7 @@ public class FilmSessionDaoImpl implements FilmSessionDao {
 
     @Override
     public FilmSession findById(int id) {
-        return filmSessionRepository.findById(id);
+        return filmSessionRepository.findOne(id);
     }
 
     @Override

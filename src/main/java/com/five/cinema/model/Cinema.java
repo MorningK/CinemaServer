@@ -1,12 +1,13 @@
 package com.five.cinema.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by msi on 2017/6/6.
  */
 @Entity
-public class Cinema {
+public class Cinema implements Serializable {
 
     @Id
     @GeneratedValue

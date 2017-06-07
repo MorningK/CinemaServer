@@ -6,8 +6,7 @@ import com.five.filmPic.model.FilmPic;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by haoye on 17-6-7.

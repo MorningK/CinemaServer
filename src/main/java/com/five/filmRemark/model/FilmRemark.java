@@ -4,13 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by haoye on 17-6-6.
  */
 @Entity
-public class FilmRemark {
+public class FilmRemark implements Serializable {
 
     @Id
     @GeneratedValue

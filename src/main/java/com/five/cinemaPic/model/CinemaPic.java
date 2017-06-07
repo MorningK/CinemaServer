@@ -4,12 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by msi on 2017/6/7.
  */
 @Entity
-public class CinemaPic {
+public class CinemaPic implements Serializable {
 
     public static int CP_COVER = 0;
     public static int CP_INSIDE = 1;

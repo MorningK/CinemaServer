@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,7 @@ import java.text.SimpleDateFormat;
  * Created by msi on 2017/6/6.
  */
 @Entity
-public class FilmSession {
+public class FilmSession implements Serializable {
     @Id
     @GeneratedValue
     private int id;
