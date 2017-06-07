@@ -16,7 +16,7 @@ public class FilmController {
     private FilmService filmService;
 
     @GetMapping("/film")
-    public MyMessage getFilm() {
+    public Object getFilm() {
         return filmService.getFilm();
     }
 

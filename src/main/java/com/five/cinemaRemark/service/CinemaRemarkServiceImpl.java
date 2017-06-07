@@ -47,7 +47,7 @@ public class CinemaRemarkServiceImpl implements CinemaRemarkService {
         Cinema cinema = cinemaService.findById(cinemaId);
         if (cinema == null) return new MyMessage(0, "电影院不存在");
         CinemaRemark[] cinemaRemarks = cinemaRemarkDao.findByCinemaId(cinemaId);
-        return cinemaRemarks;
+        return new MyMessage( 1, cinemaRemarks);
     }
 
     @Override
@@ -56,6 +56,6 @@ public class CinemaRemarkServiceImpl implements CinemaRemarkService {
         if (user == null) return new MyMessage(0, "用户不存在");
 
         CinemaRemark[] cinemaRemarks = cinemaRemarkDao.findByUserId(userId);
-        return cinemaRemarks;
+        return new MyMessage(1, cinemaRemarks);
     }
 }

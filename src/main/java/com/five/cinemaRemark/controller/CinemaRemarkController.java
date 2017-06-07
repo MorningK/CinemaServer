@@ -20,7 +20,7 @@ public class CinemaRemarkController {
     private CinemaRemarkService cinemaRemarkService;
 
     @PostMapping("/post")
-    public MyMessage postCinemaRemark(HttpSession session, int cinemaId, String content) {
+    public Object postCinemaRemark(HttpSession session, int cinemaId, String content) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
             return new MyMessage(0, "请登录");

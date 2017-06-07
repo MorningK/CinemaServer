@@ -19,13 +19,13 @@ public class PaymentController {
     PaymentService paymentService;
 
     @PostMapping("/sysupay")
-    public MyMessage payOrder(int orderId) {
+    public Object payOrder(int orderId) {
         MyMessage message = paymentService.payOrder(orderId);
         return message;
     }
 
     @PostMapping("/createWallet")
-    public MyMessage createWallet(HttpSession session) {
+    public Object createWallet(HttpSession session) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
             return new MyMessage(0, "请登录");
@@ -35,7 +35,7 @@ public class PaymentController {
     }
 
     @PostMapping("/queryWallet")
-    public MyMessage queryWallet(HttpSession session) {
+    public Object queryWallet(HttpSession session) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
             return new MyMessage(0, "请登录");
@@ -49,7 +49,7 @@ public class PaymentController {
     //userId : the id of user
     //balance : 更新的金额.如果充值了30，则balance为30.如果消费了30,则balance为-30.
     @PostMapping("/updateWallet")
-    public MyMessage updateWallet(HttpSession session) {
+    public Object updateWallet(HttpSession session) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
             return new MyMessage(0, "请登录");

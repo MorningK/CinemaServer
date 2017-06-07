@@ -7,7 +7,7 @@ import com.five.user.model.MyMessage;
  * Created by msi on 2017/6/6.
  */
 public interface CinemaService {
-    MyMessage getCinemas(int citycode, double longtitude, double latitude);
-    MyMessage getCinemas(int citycode, double longtitude, double latitude, int currentpage);
+    Object getCinemas(int citycode, double longtitude, double latitude);
+    Object getCinemas(int citycode, double longtitude, double latitude, int currentpage);
     Cinema findById(int id);
 }

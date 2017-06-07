@@ -9,6 +9,6 @@ import java.sql.Timestamp;
  * Created by msi on 2017/6/6.
  */
 public interface FilmService {
-    MyMessage getFilm();
+    Object getFilm();
     Film findById(int id);
 }
