@@ -3,9 +3,9 @@ package com.five.filmRemark.controller;
 import com.five.filmRemark.service.FilmRemarkService;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -20,7 +20,7 @@ public class filmRemarkController {
     @Autowired
     private FilmRemarkService filmRemarkService;
 
-    @PostMapping("/post")
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
     public MyMessage postFilmRemark(HttpSession session, int filmId, String content) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
@@ -30,12 +30,12 @@ public class filmRemarkController {
         return filmRemarkService.postFilmRemark(userId, filmId, content);
     }
 
-    @GetMapping("/getByFilmId")
-    public Object getFilmRemarkByFilmId(int filmId) {
+    @RequestMapping(value = "/getByFilmId/{filmId}", method = RequestMethod.GET)
+    public Object getFilmRemarkByFilmId(@PathVariable("filmId") int filmId) {
         return filmRemarkService.getFilmRemarkByFilmId(filmId);
     }
 
-    @GetMapping("/getMyFilmRemark")
+    @RequestMapping(value = "/getMyFilmRemark", method = RequestMethod.GET)
     public Object getFilmRemarkByUserId(HttpSession session) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {

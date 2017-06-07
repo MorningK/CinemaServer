@@ -1,9 +1,9 @@
 package com.five.cinema.controller;
 
 import com.five.cinema.service.CinemaService;
-import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +16,7 @@ public class CinemaController {
     @Autowired
     private CinemaService cinemaService;
 
-    @PostMapping("/cinema")
+    @RequestMapping(value = "/cinema", method = RequestMethod.POST)
     public Object findCinema(int citycode, double longtitude, double latitude, HttpSession session) {
         int currentpage = 0;
         if (session.getAttribute("page") != null) currentpage = Integer.parseInt(session.getAttribute("page").toString());

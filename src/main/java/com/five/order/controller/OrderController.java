@@ -4,8 +4,8 @@ import com.five.hallSitting.model.Sits;
 import com.five.order.service.OrderService;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -20,7 +20,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/make")
+    @RequestMapping(value = "/make", method = RequestMethod.POST)
     public MyMessage getCurrentSit(HttpSession session, int filmSessionId, String orderSit, double price) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {

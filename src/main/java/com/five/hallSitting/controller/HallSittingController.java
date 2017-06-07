@@ -3,11 +3,10 @@ package com.five.hallSitting.controller;
 import com.five.filmSession.service.FilmSessionService;
 import com.five.hallSitting.model.Sits;
 import com.five.hallSitting.service.HallSittingService;
-import com.five.user.model.MyMessage;
-import com.five.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -22,8 +21,8 @@ public class HallSittingController {
     @Autowired
     private FilmSessionService filmSessionService;
 
-    @GetMapping("/sit")
-    public Sits getCurrentSit(int filmSessionId) {
+    @RequestMapping(value = "/sit/{filmSessionId}", method = RequestMethod.GET)
+    public Sits getCurrentSit(@PathVariable("filmSessionId") int filmSessionId) {
         int hallSittingId = filmSessionService.findById(filmSessionId).getHallSittingId();
 //        int hallSittingId = 3;
         Sits sits = hallSittingService.getCurrentSit(hallSittingId);

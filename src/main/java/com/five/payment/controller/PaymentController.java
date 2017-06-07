@@ -4,7 +4,8 @@ import com.five.order.service.OrderService;
 import com.five.payment.service.PaymentService;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -18,12 +19,12 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
-    @PostMapping("/sysupay")
+    @RequestMapping(value = "/sysupay", method = RequestMethod.POST)
     public Object payOrder(int orderId) {
         return paymentService.payOrder(orderId);
     }
 
-    @PostMapping("/createWallet")
+    @RequestMapping(value = "/createWallet", method = RequestMethod.POST)
     public Object createWallet(HttpSession session) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
@@ -33,7 +34,7 @@ public class PaymentController {
         return paymentService.addWalletForNewUserById(userId, 100);
     }
 
-    @PostMapping("/queryWallet")
+    @RequestMapping(value = "/queryWallet", method = RequestMethod.POST)
     public Object queryWallet(HttpSession session) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
@@ -47,7 +48,7 @@ public class PaymentController {
     //session should have two attributes : userId and balance
     //userId : the id of user
     //balance : 更新的金额.如果充值了30，则balance为30.如果消费了30,则balance为-30.
-    @PostMapping("/updateWallet")
+    @RequestMapping(value = "/updateWallet", method = RequestMethod.POST)
     public Object updateWallet(HttpSession session) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {

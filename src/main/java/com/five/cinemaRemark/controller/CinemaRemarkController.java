@@ -3,9 +3,9 @@ package com.five.cinemaRemark.controller;
 import com.five.cinemaRemark.service.CinemaRemarkService;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -19,7 +19,7 @@ public class CinemaRemarkController {
     @Autowired
     private CinemaRemarkService cinemaRemarkService;
 
-    @PostMapping("/post")
+    @RequestMapping(value = "/post", method = RequestMethod.POST)
     public Object postCinemaRemark(HttpSession session, int cinemaId, String content) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
@@ -29,12 +29,12 @@ public class CinemaRemarkController {
         return cinemaRemarkService.postCinemaRemark(userId, cinemaId, content);
     }
 
-    @GetMapping("/getByCinemaId")
-    public Object getCinemaRemarkByCinemaId(int cinemaId) {
+    @RequestMapping(value = "/getByCinemaId/{cinemaId}", method = RequestMethod.GET)
+    public Object getCinemaRemarkByCinemaId(@PathVariable("cinemaId") int cinemaId) {
         return cinemaRemarkService.getCinemaRemarkByCinemaId(cinemaId);
     }
 
-    @GetMapping("/getMyCinemaRemark")
+    @RequestMapping(value = "/getMyCinemaRemark", method = RequestMethod.GET)
     public Object getCinemaRemarkByUserId(HttpSession session) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
