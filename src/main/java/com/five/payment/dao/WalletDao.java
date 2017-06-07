@@ -11,4 +11,5 @@ import java.util.List;
 public interface WalletDao {
     List<Wallet> findWalletByUserId(int id);
     Wallet UpdateWalletBalanceById(int id, double newBalance);
+    Wallet addWalletForNewUserById(int userId, int balance);
 }

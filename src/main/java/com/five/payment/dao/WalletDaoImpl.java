@@ -4,6 +4,7 @@ import com.five.order.model.Reservation;
 import com.five.order.repository.OrderRepository;
 import com.five.payment.model.Wallet;
 import com.five.payment.repository.WalletRepository;
+import org.hibernate.persister.walking.spi.WalkingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,12 @@ public class WalletDaoImpl implements WalletDao {
     public Wallet UpdateWalletBalanceById(int id, double newBalance) {
         Wallet wallet = walletRepository.findOne(id);
         wallet.setBalance(newBalance);
+        return walletRepository.save(wallet);
+    }
+
+    @Override
+    public Wallet addWalletForNewUserById(int userId, int balance) {
+        Wallet wallet = new Wallet(userId, balance);
         return walletRepository.save(wallet);
     }
 

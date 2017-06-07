@@ -18,6 +18,7 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+
     @PostMapping("/register")
     public MyMessage register(User user) {
         MyMessage message = userService.doRegister(user);

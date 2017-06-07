@@ -7,6 +7,6 @@ import com.five.user.model.User;
  */
 public interface UserDao {
     public User findByUsername(String username);
-    public void save(User user);
+    public User save(User user);
     public User findById(int id);
 }

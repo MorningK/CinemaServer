@@ -38,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
             return new MyMessage(0, "支付失败，数据库无记录");
         }
         if (wallets.size() != 1) {
-            return new MyMessage(0,"钱包异常，同时被多人拥有");
+            return new MyMessage(0,"钱包异常，此用户拥有多个钱包");
         }
         Wallet wallet = wallets.get(0);
         if (wallet.getBalance() > reservation.getPrice()) {
@@ -62,5 +62,66 @@ public class PaymentServiceImpl implements PaymentService {
             return new MyMessage(0, "余额不足");
         }
 
+    }
+
+    @Override
+    public MyMessage addWalletForNewUserById(int userId, int balance) {
+        Wallet wallet = findByUserId(userId);
+        if (wallet == null) {
+            if (wallet.getUserId() != -1) {
+                Wallet wallet1 = walletDao.addWalletForNewUserById(userId, balance);
+                if (wallet1 != null)
+                    return new MyMessage(1, "钱包创建成功");
+                else
+                    return new MyMessage(0, "钱包创建失败");
+            } else {
+                return new MyMessage(0, "钱包异常，此用户拥有多个钱包");
+            }
+        }
+        return new MyMessage(0, "钱包已存在");
+    }
+
+    @Override
+    public Wallet findByUserId(int userId) {
+        List<Wallet> wallets = walletDao.findWalletByUserId(userId);
+        if (wallets == null) return null;
+        else if (wallets.size() != 1) {
+            //Todo
+            // if wallet duplicate?
+            return new Wallet(-1, 0);
+
+        } else return wallets.get(0);
+    }
+
+    @Override
+    public MyMessage queryWallet(int userId) {
+        Wallet wallet = findByUserId(userId);
+        if (wallet != null) {
+            if (wallet.getUserId() != -1) {
+                return new MyMessage(1, wallet.toString());
+            } else {
+                return new MyMessage(0, "钱包异常，此用户拥有多个钱包");
+            }
+        }
+        return new MyMessage(0, "钱包不存在");
+    }
+
+    @Override
+    public MyMessage updateWallet(int userId, double balance) {
+        List<Wallet> wallets = walletDao.findWalletByUserId(userId);
+        if (wallets == null) {
+            return new MyMessage(0, "更新失败，钱包不存在");
+        }
+        if (wallets.size() != 1) {
+            return new MyMessage(0,"钱包异常，此用户拥有多个钱包");
+        }
+        Wallet wallet = wallets.get(0);
+        double oldBalance = wallet.getBalance();
+        Wallet result = walletDao.UpdateWalletBalanceById(wallet.getId(), wallet.getBalance() + balance);
+        if (result.getBalance() - balance == oldBalance) {
+            return new MyMessage(1, "钱包金额更新成功");
+        } else {
+            return new MyMessage(0, "钱包金额更新出错");
+        }
     }
 }

@@ -23,8 +23,7 @@ public class Wallet {
 
     public Wallet() {}
 
-    public Wallet(int id, double balance, int userId) {
-        this.id = id;
+    public Wallet(int userId, double balance) {
         this.balance = balance;
         this.userId = userId;
     }
@@ -52,5 +51,12 @@ public class Wallet {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "Wallet:{" +
+                "\"balance\":"+Double.toString(balance)+
+                "}";
     }
 }
