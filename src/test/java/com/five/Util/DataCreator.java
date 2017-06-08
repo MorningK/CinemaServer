@@ -74,11 +74,11 @@ public class DataCreator {
         return ans;
     }
 
-    public static List<CinemaRemark> prepareCinemaRemark(int n) {
+    public static List<CinemaRemark> prepareCinemaRemark(int n,int userIdMax, int cinemaIdMax) {
         List<CinemaRemark> ans = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            int userId = random.nextInt(n);
-            int cinemaId = random.nextInt(n);
+            int userId = random.nextInt(userIdMax);
+            int cinemaId = random.nextInt(cinemaIdMax);
             String content = "content" + Integer.toString(i);
             CinemaRemark cinemaRemark = new CinemaRemark(userId, cinemaId, content);
             ans.add(cinemaRemark);
@@ -107,23 +107,23 @@ public class DataCreator {
         return ans;
     }
 
-    public static List<FilmPic> prepareFilmPic(int n) {
+    public static List<FilmPic> prepareFilmPic(int n, int filmIdMax) {
         List<FilmPic> ans = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             String path = "path" + Integer.toString(i);
             int type = random.nextDouble()>0.5?1:0;
-            int filmId = random.nextInt(n);
+            int filmId = random.nextInt(filmIdMax);
             FilmPic filmPic = new FilmPic(path, type, filmId);
             ans.add(filmPic);
         }
         return ans;
     }
 
-    public static List<FilmRemark> prepareFilmRemark(int n) {
+    public static List<FilmRemark> prepareFilmRemark(int n, int userIdMax, int filmIdMax) {
         List<FilmRemark> ans = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            int userId = random.nextInt(n);
-            int filmId = random.nextInt(n);
+            int userId = random.nextInt(userIdMax);
+            int filmId = random.nextInt(filmIdMax);
             String content = "content" + Integer.toString(i);
             FilmRemark filmRemark = new FilmRemark(userId, filmId, content);
             ans.add(filmRemark);
@@ -131,7 +131,7 @@ public class DataCreator {
         return ans;
     }
 
-    public static List<FilmSession> prepareFilmSession(int n) {
+    public static List<FilmSession> prepareFilmSession(int n, int cinemaIdMax, int filmIdMax) {
         List<FilmSession> ans = new ArrayList<>();
         Date d = new Date();
         for (int i = 0; i < n; i++) {
@@ -140,9 +140,9 @@ public class DataCreator {
             long a = random.nextLong() > 0?random.nextLong()%86400000L:(-random.nextLong())%86400000L;
             Timestamp beginTime = new Timestamp(d.getTime() + a);
             Timestamp endTime = new Timestamp(beginTime.getTime() + 1296000000L);
-            int cinemaId = random.nextInt(n);
-            int hallSittingId = random.nextInt(n);
-            int filmId = random.nextInt(n);
+            int cinemaId = random.nextInt(cinemaIdMax);
+            int hallSittingId = i;
+            int filmId = random.nextInt(filmIdMax);
             double price = random.nextDouble() * 15;
             FilmSession filmSession = new FilmSession(hall, beginTime, endTime, classification, price, cinemaId, hallSittingId, filmId);
             ans.add(filmSession);
@@ -166,15 +166,15 @@ public class DataCreator {
         return ans;
     }
 
-    public static List<Reservation> prepareOrder(int n) {
+    public static List<Reservation> prepareOrder(int n, int userIdMax, int filmSessionIdMax) {
         List<Reservation> ans = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
             OneSit oneSit = new OneSit(i, i, true);
             String sitting = '{' + "\"sit\":[{\"x\":"+Integer.toString(i)+",\"y\":"+Integer.toString(i)+"}]" +'}';
             double price = random.nextDouble()*15;
-            int filmSessionId = random.nextInt(n);
-            int userId = random.nextInt(n);
+            int filmSessionId = random.nextInt(filmSessionIdMax);
+            int userId = random.nextInt(userIdMax);
             ans.add(new Reservation(sitting, price, filmSessionId, userId));
         }
         return ans;

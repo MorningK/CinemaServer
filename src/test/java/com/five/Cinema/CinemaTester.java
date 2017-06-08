@@ -59,9 +59,9 @@ public class CinemaTester {
         * Insert 10 cinema with same citycode
         * */
         cinemasWithSameCityCode = DataCreator.prepareCinemaWithSameCity(10, 21);
-        for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 10; i++) {
             cinemaRepository.save(cinemasWithSameCityCode.get(i));
-        }
+    }
         cinemaService.reload();
     }
 

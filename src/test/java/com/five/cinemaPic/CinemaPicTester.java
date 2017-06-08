@@ -91,7 +91,7 @@ public class CinemaPicTester {
     @Test
     public void queryCoverByCinemaIdTest() {
         for (Cinema cinema : cinemas) {
-            List<CinemaPic> cinemaPics = (ArrayList<CinemaPic>)((MyMessage)cinemaPicService.getCoverByCinemaId(cinema.getId())).getMessage();
+            List<CinemaPic> cinemaPics = (List<CinemaPic>)((MyMessage)cinemaPicService.getCoverByCinemaId(cinema.getId())).getMessage();
             if (cinemaPics == null) {
                 Assert.assertNull(covers.get(cinema.getId()));
             } else {
@@ -114,7 +114,7 @@ public class CinemaPicTester {
     @Test
     public void queryInsideByCinemaIdTest() {
         for (Cinema cinema : cinemas) {
-            List<CinemaPic> cinemaPics = (ArrayList<CinemaPic>)((MyMessage)cinemaPicService.getInsideByCinemaId(cinema.getId())).getMessage();
+            List<CinemaPic> cinemaPics = (List<CinemaPic>)((MyMessage)cinemaPicService.getInsideByCinemaId(cinema.getId())).getMessage();
             if (cinemaPics == null) {
                 Assert.assertNull(insides.get(cinema.getId()));
             } else {
