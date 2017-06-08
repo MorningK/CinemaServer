@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.junit.Assert.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -48,15 +50,34 @@ public class CinemaTester {
             String phone = Integer.toString(i);
             double lo = random.nextDouble();
             double la = random.nextDouble();
-            int cityCode = random.nextInt();
+            int cityCode = random.nextInt(10);
             Cinema cinema = new Cinema(name, address,phone, lo, la, cityCode);
-            cinemas.add(cinemaRepository.save(cinema));
+            Cinema afterc = cinemaRepository.save(cinema);
+            cinemas.add(afterc);
         }
     }
+
+    public Object[] cinemaToArray(Cinema a) {
+        return new Object[] {
+                a.getId(),
+                a.getAddress(),
+                a.getCitycode(),
+                a.getLatitude(),
+                a.getLongtitude(),
+                a.getName(),
+                a.getPhone()
+        };
+    }
+
     @Test
     public void queryTest() throws Exception {
+//        cinemaRepository.reload();
+        cinemaService.reload();
+        List<Cinema> cinemas = cinemaRepository.findAll();
         for (int i = 0; i < cinemas.size(); i++) {
-            Assert.assertEquals(cinemas.get(i), cinemaService.findById(cinemas.get(i).getId()));
+            Cinema actual = cinemas.get(i);
+            Cinema expe = cinemaService.findById(actual.getId());
+            Assert.assertArrayEquals(cinemaToArray(expe), cinemaToArray(actual));
         }
     }
 }
