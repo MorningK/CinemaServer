@@ -2,6 +2,7 @@ package com.five.user.controller;
 
 import com.five.user.model.MyMessage;
 import com.five.user.model.User;
+import com.five.user.service.UserService;
 import com.five.user.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
