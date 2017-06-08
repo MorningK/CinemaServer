@@ -3,6 +3,7 @@ package com.five.cinema.dao;
 import com.five.cinema.model.Cinema;
 import com.five.cinema.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -64,4 +65,5 @@ public class CinemaDaoImpl implements CinemaDao {
     public Cinema findById(int id) {
         return cinemaRepository.findOne(id);
     }
+
 }

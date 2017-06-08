@@ -9,4 +9,5 @@ import com.five.user.model.MyMessage;
 public interface CinemaService {
     Object getCinemas(int citycode, double longtitude, double latitude, int currentpage);
     Cinema findById(int id);
+    void reload();
 }

@@ -2,6 +2,7 @@ package com.five.cinema.repository;
 
 import com.five.cinema.model.Cinema;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,4 +17,5 @@ public interface CinemaRepository extends JpaRepository<Cinema, Integer> {
     List<Cinema> findByCitycode(int citycode);
     @Cacheable
     Cinema findOne(Integer id);
+
 }

@@ -4,6 +4,8 @@ import com.five.cinema.dao.CinemaDao;
 import com.five.cinema.model.Cinema;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import java.util.List;
  */
 @Service
 @Transactional
+@CacheConfig(cacheNames = "cinema")
 public class CinemaServieceImpl implements CinemaService  {
 
     @Autowired
@@ -34,5 +37,11 @@ public class CinemaServieceImpl implements CinemaService  {
     @Override
     public Cinema findById(int id) {
         return cinemaDao.findById(id);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "cinema", allEntries = true)
+    public void reload() {
+
     }
 }
