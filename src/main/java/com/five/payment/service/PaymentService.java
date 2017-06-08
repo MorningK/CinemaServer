@@ -18,4 +18,6 @@ public interface PaymentService {
 
     Object updateWallet(int userId, double balance);
 
+    void reload();
+
 }

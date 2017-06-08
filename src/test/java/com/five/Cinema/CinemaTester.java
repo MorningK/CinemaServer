@@ -1,5 +1,7 @@
-package com.five;
+package com.five.Cinema;
 
+import com.five.CinemaApplication;
+import com.five.Util.DataCreator;
 import com.five.cinema.dao.CinemaDao;
 import com.five.cinema.model.Cinema;
 import com.five.cinema.repository.CinemaRepository;
@@ -18,6 +20,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,40 +42,25 @@ public class CinemaTester {
     @Autowired
     private CinemaDao cinemaDao;
 
-    private ArrayList<Cinema> cinemas = new ArrayList<Cinema>();
-    private ArrayList<Cinema> cinemasWithSameCityCode = new ArrayList<Cinema>();
+    private List<Cinema> cinemas = new ArrayList<Cinema>();
+    private List<Cinema> cinemasWithSameCityCode = new ArrayList<Cinema>();
 
     @Before
     public void prepareData() {
         /*
         * Insert 10 random cinema into database
         * */
-        Random random = new Random();
+        cinemas = DataCreator.prepareCinema(10);
         for (int i = 0; i < 10; i++) {
-            String name = "cinema" + Integer.toString(i);
-            String address = "address" + Integer.toString(i);
-            String phone = Integer.toString(i);
-            double lo = random.nextDouble();
-            double la = random.nextDouble();
-            int cityCode = random.nextInt(10);
-            Cinema cinema = new Cinema(name, address,phone, lo, la, cityCode);
-            Cinema afterc = cinemaRepository.save(cinema);
-            cinemas.add(afterc);
+            cinemaRepository.save(cinemas.get(i));
         }
 
         /*
         * Insert 10 cinema with same citycode
         * */
-        for (int i = 10; i < 10; i++) {
-            String name = "cinema" + Integer.toString(i);
-            String address = "address" + Integer.toString(i);
-            String phone = Integer.toString(i);
-            double lo = 0.5+0.1*i;
-            double la = 0.5+0.1*i;
-            int cityCode = 11;
-            Cinema cinema = new Cinema(name, address,phone, lo, la, cityCode);
-            Cinema afterc = cinemaRepository.save(cinema);
-            cinemasWithSameCityCode.add(afterc);
+        cinemasWithSameCityCode = DataCreator.prepareCinemaWithSameCity(10, 21);
+        for (int i = 0; i < 10; i++) {
+            cinemaRepository.save(cinemasWithSameCityCode.get(i));
         }
         cinemaService.reload();
     }

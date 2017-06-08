@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by haoye on 17-6-6.
@@ -25,8 +26,8 @@ public class UserServiceImpl implements UserService {
     private PaymentService paymentService;
 
     public MyMessage doRegister(User user) {
-        User user1 = userDao.findByUsername(user.getUsername());
-        if (user1 == null) { // 没有找到，可以注册
+        List<User> users = userDao.findByUsername(user.getUsername());
+        if (users.size() == 0) { // 没有找到，可以注册
             User registeredUser = userDao.save(user);
 
             MyMessage message = (MyMessage) paymentService.addWalletForNewUserById(registeredUser.getId(), 100);
@@ -37,10 +38,12 @@ public class UserServiceImpl implements UserService {
     }
 
     public MyMessage doLogin(String username, String password, HttpSession session) {
-        User user = userDao.findByUsername(username);
+        List<User> users = userDao.findByUsername(username);
         MyMessage message = new MyMessage();
         message.setStatus(0);
-        if (user == null) {
+        if (users.size() > 1) return new MyMessage(0,"用户名重复，请更改用户名");
+        User user = users.get(0);
+        if (users.size() == 0) {
             message.setMessage("用户不存在");
         } else if (!user.getPassword().equals(password)) {
             message.setMessage("密码错误");
@@ -55,6 +58,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(int id) {
         return userDao.findById(id);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        List<User> users = userDao.findByUsername(username);
+        if (users.size() == 0) { // 没有找到，可以注册
+            return null;
+        } else if (users.size() > 1) {
+            return null;
+        }
+        return users.get(0);
+    }
+
+    @Override
+    public void reload() {
+        userDao.reload();
     }
 
 }

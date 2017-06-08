@@ -9,4 +9,5 @@ public interface CinemaRemarkDao {
     void save(CinemaRemark cinemaRemarkRemark);
     CinemaRemark[] findByCinemaId(int cinemaId);
     CinemaRemark[] findByUserId(int userId);
+    void reload();
 }

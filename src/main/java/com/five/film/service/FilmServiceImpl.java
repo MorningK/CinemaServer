@@ -50,5 +50,10 @@ public class FilmServiceImpl implements FilmService {
         return filmDao.findById(id);
     }
 
+    @Override
+    public void reload() {
+        filmDao.reload();
+    }
+
 
 }

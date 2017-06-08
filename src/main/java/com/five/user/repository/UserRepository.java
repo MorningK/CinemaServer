@@ -5,13 +5,16 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * Created by haoye on 17-6-6.
  */
 @CacheConfig(cacheNames = "user")
 public interface UserRepository extends JpaRepository<User, Integer>{
     @Cacheable
-    public User findByUsername(String username);
+    public List<User> findByUsername(String username);
+
     @Cacheable
-    public User findOne(Integer id);
+    public User findById(int id);
 }

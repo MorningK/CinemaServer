@@ -20,10 +20,10 @@ public interface FilmSessionRepository extends JpaRepository<FilmSession, Intege
     FilmSession findOne(Integer id);
 
     @Cacheable
-    @Query(value = "select f from FilmSession f where f.filmId=:fid AND f.cinemaId=:cid AND f.beginTime >= :bt AND f.endTime <= :et")
+    @Query(value = "select f from FilmSession f where f.filmId=:fid AND f.cinemaId=:cid AND f.beginTime >= :bt AND f.beginTime <= :et")
     List<FilmSession> findByFilmIdAndCinemaIdAndBeginTimeGreaterThanAndEndTimeLessThen(@Param("fid") int filmId, @Param("cid") int cinemaId,
                                                                                        @Param("bt") Timestamp bt, @Param("et")  Timestamp et);
     @Cacheable
-    @Query(value = "select distinct f.filmId from FilmSession f where  f.beginTime >= :bt AND f.endTime <= :et")
+    @Query(value = "select distinct f.filmId from FilmSession f where  f.beginTime >= :bt AND f.beginTime <= :et")
     List<Integer> findByBeginTimeGreaterThenAndEndTimeLessThen(@Param("bt") Timestamp bt,@Param("et") Timestamp et);
 }

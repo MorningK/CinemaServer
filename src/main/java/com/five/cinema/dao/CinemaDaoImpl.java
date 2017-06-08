@@ -3,6 +3,7 @@ package com.five.cinema.dao;
 import com.five.cinema.model.Cinema;
 import com.five.cinema.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by msi on 2017/6/6.
  */
 @Repository
+@CacheConfig(cacheNames = "cinema")
 public class CinemaDaoImpl implements CinemaDao {
 
     @Autowired
@@ -64,6 +66,12 @@ public class CinemaDaoImpl implements CinemaDao {
     @Override
     public Cinema findById(int id) {
         return cinemaRepository.findOne(id);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "cinema", allEntries = true)
+    public void reload() {
+
     }
 
 }

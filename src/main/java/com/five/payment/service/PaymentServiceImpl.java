@@ -8,6 +8,8 @@ import com.five.payment.dao.WalletDao;
 import com.five.payment.model.Wallet;
 import com.five.user.model.MyMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,30 +67,32 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Object addWalletForNewUserById(int userId, int balance) {
         Wallet wallet = findByUserId(userId);
-        if (wallet == null) {
+        if (wallet != null) {
             if (wallet.getUserId() != -1) {
-                Wallet wallet1 = walletDao.addWalletForNewUserById(userId, balance);
-                if (wallet1 != null)
-                    return new MyMessage(1, "钱包创建成功");
-                else
-                    return new MyMessage(0, "钱包创建失败");
+                return new MyMessage(0, "钱包已存在");
             } else {
                 return new MyMessage(0, "钱包异常，此用户拥有多个钱包");
             }
+        } else {
+            Wallet wallet1 = walletDao.addWalletForNewUserById(userId, balance);
+            if (wallet1 != null)
+                return new MyMessage(1, "钱包创建成功");
+            else
+                return new MyMessage(0, "钱包创建失败");
         }
-        return new MyMessage(0, "钱包已存在");
     }
 
     @Override
     public Wallet findByUserId(int userId) {
         List<Wallet> wallets = walletDao.findWalletByUserId(userId);
         if (wallets == null) return null;
-        else if (wallets.size() != 1) {
+        else if (wallets.size() > 1) {
             //Todo
             // if wallet duplicate?
             return new Wallet(-1, 0);
 
-        } else return wallets.get(0);
+        } else if (wallets.size() == 0) return null;
+        else return wallets.get(0);
     }
 
     @Override
@@ -106,14 +110,14 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Object updateWallet(int userId, double balance) {
-        List<Wallet> wallets = walletDao.findWalletByUserId(userId);
-        if (wallets == null) {
+//        List<Wallet> wallets = walletDao.findWalletByUserId(userId);
+        Wallet wallet = findByUserId(userId);
+        if (wallet == null) {
             return new MyMessage(0, "更新失败，钱包不存在");
         }
-        if (wallets.size() != 1) {
+        if (wallet.getId() == -1) {
             return new MyMessage(0,"钱包异常，此用户拥有多个钱包");
         }
-        Wallet wallet = wallets.get(0);
         double oldBalance = wallet.getBalance();
         Wallet result = walletDao.UpdateWalletBalanceById(wallet.getId(), wallet.getBalance() + balance);
         if (result.getBalance() - balance == oldBalance) {
@@ -121,5 +125,10 @@ public class PaymentServiceImpl implements PaymentService {
         } else {
             return new MyMessage(0, "钱包金额更新出错");
         }
+    }
+
+    @Override
+    public void reload() {
+        walletDao.reload();
     }
 }

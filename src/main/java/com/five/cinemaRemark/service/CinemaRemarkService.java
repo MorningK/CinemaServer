@@ -9,4 +9,5 @@ public interface CinemaRemarkService {
     MyMessage postCinemaRemark(int userId, int cinemaId, String content);
     Object getCinemaRemarkByCinemaId(int cinemaId);
     Object getCinemaRemarkByUserId(int userId);
+    void reload();
 }

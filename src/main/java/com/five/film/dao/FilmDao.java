@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface FilmDao {
     Film findById(int id);
+    void reload();
 }

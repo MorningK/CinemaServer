@@ -18,7 +18,7 @@ import java.util.List;
 public interface WalletRepository extends JpaRepository<Wallet, Integer> {
 
     @Cacheable
-    List<Wallet> findByUserId(int id);
+    List<Wallet> findByUserId(int userId);
 
     @Cacheable
     Wallet findOne(Integer id);

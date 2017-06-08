@@ -12,4 +12,6 @@ public interface UserService {
     public MyMessage doRegister(User user);
     public MyMessage doLogin(String username, String password, HttpSession session);
     public User findById(int id);
+    public User findByUsername(String username);
+    void reload();
 }

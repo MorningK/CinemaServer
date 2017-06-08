@@ -19,7 +19,6 @@ import java.util.List;
  */
 @Service
 @Transactional
-@CacheConfig(cacheNames = "cinemaPic")
 public class CinemaPicServiceImpl implements CinemaPicService {
 
     @Autowired
@@ -49,8 +48,7 @@ public class CinemaPicServiceImpl implements CinemaPicService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "cinemaPic", allEntries = true)
     public void reload() {
-
+        cinemaPicDao.reload();
     }
 }

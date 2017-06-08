@@ -57,4 +57,9 @@ public class CinemaRemarkServiceImpl implements CinemaRemarkService {
         CinemaRemark[] cinemaRemarks = cinemaRemarkDao.findByUserId(userId);
         return new MyMessage(1, cinemaRemarks);
     }
+
+    @Override
+    public void reload() {
+        cinemaRemarkDao.reload();
+    }
 }

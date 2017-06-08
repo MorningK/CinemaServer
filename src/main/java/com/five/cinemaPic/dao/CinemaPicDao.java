@@ -10,4 +10,5 @@ import java.util.List;
 public interface CinemaPicDao {
     public List<CinemaPic> getCoverByCinemaId(int cinemaId);
     public List<CinemaPic> getInsideByCinemaId(int cinemaId);
+    void reload();
 }

@@ -11,4 +11,5 @@ import java.sql.Timestamp;
 public interface FilmService {
     Object getFilm();
     Film findById(int id);
+    void reload();
 }
