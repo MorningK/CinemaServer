@@ -8,4 +8,5 @@ import com.five.user.model.MyMessage;
 public interface CinemaPicService {
     public Object getCoverByCinemaId(int cinemaId);
     public Object getInsideByCinemaId(int cinemaId);
+    void reload();
 }

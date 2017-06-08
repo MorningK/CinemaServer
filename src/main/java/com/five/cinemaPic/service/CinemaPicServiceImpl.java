@@ -5,7 +5,10 @@ import com.five.cinema.service.CinemaService;
 import com.five.cinemaPic.dao.CinemaPicDao;
 import com.five.cinemaPic.model.CinemaPic;
 import com.five.user.model.MyMessage;
+import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +19,7 @@ import java.util.List;
  */
 @Service
 @Transactional
+@CacheConfig(cacheNames = "cinemaPic")
 public class CinemaPicServiceImpl implements CinemaPicService {
 
     @Autowired
@@ -42,5 +46,11 @@ public class CinemaPicServiceImpl implements CinemaPicService {
         if (cinemaPics == null) return new MyMessage(0,"找不到内部照片");
         if (cinemaPics.size() == 0) return new MyMessage(0,"找不到内部照片");
         else return new MyMessage(1, cinemaPics);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "cinemaPic", allEntries = true)
+    public void reload() {
+
     }
 }
