@@ -5,6 +5,7 @@ import com.five.hallSitting.service.HallSittingService;
 import com.five.order.dao.OrderDao;
 import com.five.order.model.Reservation;
 import com.five.order.utils.ClockThread;
+import com.five.order.utils.ClockThreadPool;
 import com.five.user.model.MyMessage;
 import com.five.user.model.User;
 import com.five.user.service.UserService;
@@ -29,6 +30,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private UserService userService;
 
+    private ClockThreadPool clockThreadPool = ClockThreadPool.getInstance();
+
     @Override
     public MyMessage makeOrder(int userId, int filmSessionId, String orderSit, double price) {
         User user = userService.findById(userId);
@@ -45,7 +48,12 @@ public class OrderServiceImpl implements OrderService {
         hallSittingService.addSitting(orderSit, hallSittingId);
         Reservation order = orderDao.save(userId, filmSessionId, orderSit, price);
 
-        ClockThread clockThread = new ClockThread(order, this);
+//        ClockThread clockThread = new ClockThread(order, this);
+        int pos = clockThreadPool.createThread(order, this);
+        ClockThread clockThread = clockThreadPool.getThread(pos);
+        clockThread.setPos(pos);
+
+        new Thread(clockThread).start();
         return new MyMessage(1, "下单成功");
     }
 

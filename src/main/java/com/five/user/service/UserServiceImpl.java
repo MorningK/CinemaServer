@@ -6,6 +6,7 @@ import com.five.user.dao.UserDao;
 import com.five.user.model.MyMessage;
 import com.five.user.model.User;
 import com.five.user.utils.CodeUtil;
+import com.five.user.utils.MailThreadPool;
 import com.five.user.utils.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PaymentService paymentService;
+
+    private MailThreadPool mailThreadPool = MailThreadPool.getInstance();
 
     public MyMessage doRegister(User user) {
         if (user == null) {
@@ -51,7 +54,9 @@ public class UserServiceImpl implements UserService {
         }
 
         String code = CodeUtil.generateUniqueCode();
-        new Thread(new MailUtil(email,code)).start();
+        int pos = mailThreadPool.createThread(email, code);
+        MailUtil mailUtil = mailThreadPool.getThread(pos);
+        new Thread(mailUtil).start();
         user.setCode(code);
 
         User registeredUser = userDao.save(user);

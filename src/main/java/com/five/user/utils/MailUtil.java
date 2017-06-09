@@ -24,6 +24,11 @@ public class MailUtil implements Runnable {
         this.code = code;
     }
 
+    public void init(String email, String code) {
+        this.email = email;
+        this.code = code;
+    }
+
     public void run() {
         // 配置
         Properties prop=new Properties();
