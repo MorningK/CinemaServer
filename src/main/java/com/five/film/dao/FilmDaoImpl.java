@@ -5,6 +5,8 @@ import com.five.film.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,6 +20,7 @@ public class FilmDaoImpl implements FilmDao {
     private FilmRepository filmRepository;
 
     @Override
+    @Cacheable(cacheNames = "film", key = "#result.getId()", condition = "#result != null")
     public Film findById(int id) {
         return filmRepository.findById(id);
     }
@@ -26,5 +29,11 @@ public class FilmDaoImpl implements FilmDao {
     @CacheEvict(cacheNames = "film", allEntries = true)
     public void reload() {
 
+    }
+
+    @Override
+    @CachePut(cacheNames = "film", key = "#result.getId()", condition = "#result != null")
+    public Film save(Film film) {
+        return filmRepository.save(film);
     }
 }

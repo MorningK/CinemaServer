@@ -6,10 +6,12 @@ import com.five.cinema.dao.CinemaDao;
 import com.five.cinema.model.Cinema;
 import com.five.cinema.repository.CinemaRepository;
 import com.five.cinema.service.CinemaService;
+import com.five.user.model.MyMessage;
 import com.five.user.model.User;
 import com.five.user.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert.*;
@@ -42,27 +44,34 @@ public class CinemaTester {
     @Autowired
     private CinemaDao cinemaDao;
 
-    private List<Cinema> cinemas = new ArrayList<Cinema>();
-    private List<Cinema> cinemasWithSameCityCode = new ArrayList<Cinema>();
+    private List<Cinema> cinemas = null;
+    private List<Cinema> cinemasWithSameCityCode = null;
 
     @Before
     public void prepareData() {
         /*
         * Insert 10 random cinema into database
         * */
-        cinemas = DataCreator.prepareCinema(10);
-        for (int i = 0; i < 10; i++) {
-            cinemaRepository.save(cinemas.get(i));
+        if (cinemas == null) {
+            System.out.println("prepare cinemas");
+            cinemas = DataCreator.prepareCinema(10);
+            for (int i = 0; i < cinemas.size(); i++) {
+                cinemaDao.save(cinemas.get(i));
+            }
         }
+
 
         /*
         * Insert 10 cinema with same citycode
         * */
-        cinemasWithSameCityCode = DataCreator.prepareCinemaWithSameCity(10, 21);
-                for (int i = 0; i < 10; i++) {
-            cinemaRepository.save(cinemasWithSameCityCode.get(i));
-    }
-        cinemaService.reload();
+        if (cinemasWithSameCityCode == null) {
+            System.out.println("prepare cwcs");
+            cinemasWithSameCityCode = DataCreator.prepareCinemaWithSameCity(10, 11, 0.5, 0.5);
+            for (int i = 0; i < cinemasWithSameCityCode.size(); i++) {
+                cinemaDao.save(cinemasWithSameCityCode.get(i));
+            }
+        }
+
     }
 
     public Object[] cinemaToArray(Cinema a) {
@@ -78,8 +87,7 @@ public class CinemaTester {
     }
 
     @Test
-    public void queryTest() throws Exception {
-//        cinemaRepository.reload();
+    public void queryByIdTest() throws Exception {
         for (int i = 0; i < cinemas.size(); i++) {
             Cinema actual = cinemas.get(i);
             Cinema expe = cinemaService.findById(actual.getId());
@@ -88,12 +96,16 @@ public class CinemaTester {
     }
 
     @Test
-    public void locationTest() throws Exception {
-        List<Cinema> expel = cinemaDao.findByLocation(11, 0.5,0.5,0);
-        for (int i = 0; i < cinemasWithSameCityCode.size(); i++) {
-            Cinema actual = cinemasWithSameCityCode.get(i);
-            Cinema expe = expel.get(i);
-            Assert.assertArrayEquals(cinemaToArray(expe), cinemaToArray(actual));
+    public void queryByLocationTest() throws Exception {
+        MyMessage message = (MyMessage)(cinemaService.getCinemas(11, 0.5,0.5,0));
+        Assert.assertEquals(1, message.getStatus());
+        if (message.getStatus() == 1) {
+            List<Cinema> expel = (List<Cinema>)(message.getMessage());
+            for (int i = 0; i < cinemasWithSameCityCode.size(); i++) {
+                Cinema actual = cinemasWithSameCityCode.get(i);
+                Cinema expe = expel.get(i);
+                Assert.assertArrayEquals(cinemaToArray(expe), cinemaToArray(actual));
+            }
         }
     }
 }

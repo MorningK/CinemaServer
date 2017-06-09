@@ -12,4 +12,5 @@ public interface FilmSessionDao {
     FilmSession findById(int id);
     List<Integer> findFilmIdByTime(Timestamp bt, Timestamp et);
     List<FilmSession> findByFilmAndCinemaAndTime(int filmId, int cinemaId, Timestamp bt, Timestamp et);
+    FilmSession save(FilmSession filmSession);
 }

@@ -5,6 +5,7 @@ import com.five.Util.DataCreator;
 import com.five.cinema.model.Cinema;
 import com.five.cinema.repository.CinemaRepository;
 import com.five.cinema.service.CinemaService;
+import com.five.cinemaRemark.dao.CinemaRemarkDao;
 import com.five.cinemaRemark.model.CinemaRemark;
 import com.five.cinemaRemark.repository.CinemaRemarkRepository;
 import com.five.cinemaRemark.service.CinemaRemarkService;
@@ -40,7 +41,7 @@ public class CinemaRemarkTester {
     private UserService userService;
 
     @Autowired
-    private CinemaRemarkRepository cinemaRemarkRepository;
+    private CinemaRemarkDao cinemaRemarkDao;
 
     @Autowired
     private CinemaRemarkService cinemaRemarkService;
@@ -53,30 +54,30 @@ public class CinemaRemarkTester {
 
     private Object[] toObjectArray(CinemaRemark cinemaRemark) {
         return new Object[] {
-                cinemaRemark.getId(),
+//                cinemaRemark.getId(),
                 cinemaRemark.getCinemaId(),
                 cinemaRemark.getContent(),
-                cinemaRemark.getTime(),
+//                cinemaRemark.getTime(),
                 cinemaRemark.getUserId()
         };
     }
 
     @Before
     public void prepareData() {
-        cinemas = DataCreator.prepareCinema(10);
-        for (int i = 0; i < 10; i++) {
+        cinemas = DataCreator.prepareCinema(5);
+        for (int i = 0; i < cinemas.size(); i++) {
             cinemaRepository.save(cinemas.get(i));
         }
 
-        users = DataCreator.prepareUser(100);
-        for (int i = 0; i < 10; i++) {
+        users = DataCreator.prepareUser(5);
+        for (int i = 0; i < users.size(); i++) {
             userService.doRegister(users.get(i));
         }
 
-        List<CinemaRemark> cinemaRemarks = DataCreator.prepareCinemaRemark(1000, 100, 10);
+        cinemaRemarks = DataCreator.prepareCinemaRemark(25, 5, 5);
         for (int i = 0; i < cinemaRemarks.size(); i++) {
             CinemaRemark cinemaRemark = cinemaRemarks.get(i);
-            cinemaRemarkRepository.save(cinemaRemark);
+            cinemaRemarkService.postCinemaRemark(cinemaRemark.getUserId(), cinemaRemark.getCinemaId(), cinemaRemark.getContent());
             int userId = cinemaRemark.getUserId(), cinemaId = cinemaRemark.getCinemaId();
             if (userCRs.get(userId) == null) {
                 List<Integer> tempCR = new ArrayList<>();
@@ -92,18 +93,21 @@ public class CinemaRemarkTester {
 
     }
 
+
     @Test
     public void queryByUserIdTest() {
         for (User user : users) {
-            CinemaRemark[] cinemaRemarka =
-                    (CinemaRemark[])(((MyMessage)cinemaRemarkService.getCinemaRemarkByUserId(user.getId())).getMessage());
+            MyMessage message = (MyMessage)cinemaRemarkService.getCinemaRemarkByUserId(user.getId());
             if (userCRs.get(user.getId()) == null) {
-                Assert.assertEquals(0, cinemaRemarka.length);
+                Assert.assertEquals(0, message.getStatus());
             } else {
+                Assert.assertEquals(1, message.getStatus());
+                List<CinemaRemark> cinemaRemarka =
+                        (List<CinemaRemark>)(message.getMessage());
                 List<Integer> ids = userCRs.get(user.getId());
-                Assert.assertEquals(ids, cinemaRemarka.length);
+                Assert.assertEquals(ids.size(), cinemaRemarka.size());
                 for (int i = 0; i < ids.size(); i++) {
-                    Assert.assertArrayEquals(toObjectArray(cinemaRemarks.get(ids.get(i))), toObjectArray(cinemaRemarka[i]));
+                    Assert.assertArrayEquals(toObjectArray(cinemaRemarks.get(ids.get(i))), toObjectArray(cinemaRemarka.get(i)));
                 }
             }
         }
@@ -112,15 +116,17 @@ public class CinemaRemarkTester {
     @Test
     public void queryByCinemaIdTest() {
         for (Cinema cinema : cinemas) {
-            CinemaRemark[] cinemaRemarka =
-                    (CinemaRemark[])(((MyMessage)cinemaRemarkService.getCinemaRemarkByCinemaId(cinema.getId())).getMessage());
+            MyMessage message = (MyMessage)cinemaRemarkService.getCinemaRemarkByCinemaId(cinema.getId());
             if (cinemaCRs.get(cinema.getId()) == null) {
-                Assert.assertEquals(0, cinemaRemarka.length);
+                Assert.assertEquals(0, message.getStatus());
             } else {
+                Assert.assertEquals(1, message.getStatus());
+                List<CinemaRemark> cinemaRemarka =
+                        (List<CinemaRemark>)(message.getMessage());
                 List<Integer> ids = cinemaCRs.get(cinema.getId());
-                Assert.assertEquals(ids, cinemaRemarka.length);
+                Assert.assertEquals(ids.size(), cinemaRemarka.size());
                 for (int i = 0; i < ids.size(); i++) {
-                    Assert.assertArrayEquals(toObjectArray(cinemaRemarks.get(ids.get(i))), toObjectArray(cinemaRemarka[i]));
+                    Assert.assertArrayEquals(toObjectArray(cinemaRemarks.get(ids.get(i))), toObjectArray(cinemaRemarka.get(i)));
                 }
             }
         }

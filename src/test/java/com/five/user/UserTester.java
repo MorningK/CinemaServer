@@ -11,6 +11,7 @@ import com.five.payment.service.PaymentService;
 import com.five.user.dao.UserDao;
 import com.five.user.model.MyMessage;
 import com.five.user.model.User;
+import com.five.user.repository.UserRepository;
 import com.five.user.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,6 +42,9 @@ public class UserTester {
     private UserService userService;
 
     @Autowired
+    private UserDao userDao;
+
+    @Autowired
     private PaymentService paymentService;
 
     private List<User> users = new ArrayList<>();
@@ -50,16 +54,16 @@ public class UserTester {
         /*
         * Register 10 user
         * */
-        Random random = new Random();
         users = DataCreator.prepareUser(10);
         for (int i = 0; i < 10; i++) {
             User user = users.get(i);
+//            userDao.save(user);
             MyMessage message = userService.doRegister(user);
             if (message.getStatus() != 1) {
                 System.out.println(message.getMessage());
             }
         }
-        userService.reload();
+//        userService.reload();
     }
 
     private Object[] userToArray(User a) {
@@ -70,7 +74,16 @@ public class UserTester {
         };
     }
 
+    @Test
+    public void cacheTest() throws Exception {
+        User user1 = users.get(0);
+//        User q1 = userService.findByUsername(user1.getUsername());
+        User q1 = userService.findById(user1.getId());
+        System.out.println("first : " + q1.getUsername());
 
+        User q2 = userService.findById(user1.getId());
+        System.out.println("second : " + q2.getUsername());
+    }
 
     @Test
     public void queryByUsernameTest() throws Exception {
@@ -79,17 +92,9 @@ public class UserTester {
             User actul = userService.findByUsername(expt.getUsername());
             Assert.assertArrayEquals(userToArray(expt), userToArray(actul));
         }
-        userService.reload();
+//        userService.reload();
     }
 
-
-    /*todo
-    * java.lang.ClassCastException: java.util.ArrayList cannot be cast to com.five.user.model.User
-    *
-    * userService.findById() --> userRepository.findById() will return a List<User> not a User
-    * The reason is @Cacheable
-    * The same as other findById(int id)
-    * */
     @Test
     public void queryByUserIdTest() throws Exception {
         for (int i = 0; i < users.size(); i++) {
@@ -105,6 +110,7 @@ public class UserTester {
             User expt = users.get(i);
             Wallet wallet = paymentService.findByUserId(expt.getId());
             Assert.assertNotNull(wallet);
+            Assert.assertEquals(expt.getId(), wallet.getUserId());
         }
     }
 

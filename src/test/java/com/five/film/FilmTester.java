@@ -2,11 +2,21 @@ package com.five.film;
 
 import com.five.CinemaApplication;
 import com.five.Util.DataCreator;
+import com.five.cinema.dao.CinemaDao;
+import com.five.cinema.model.Cinema;
+import com.five.cinema.service.CinemaService;
+import com.five.cinemaRemark.model.CinemaRemark;
+import com.five.film.Util.FilmUtil;
+import com.five.film.dao.FilmDao;
 import com.five.film.model.Film;
 import com.five.film.repository.FilmRepository;
 import com.five.film.service.FilmService;
+import com.five.filmSession.dao.FilmSessionDao;
+import com.five.filmSession.model.FilmSession;
+import com.five.user.model.MyMessage;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +25,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -33,9 +40,18 @@ public class FilmTester {
     private FilmService filmService;
 
     @Autowired
-    private FilmRepository filmRepository;
+    private FilmDao filmDao;
+
+    @Autowired
+    private CinemaDao cinemaDao;
+
+    @Autowired
+    private FilmSessionDao filmSessionDao;
 
     private List<Film> films = new ArrayList<Film>();
+    private List<FilmSession> filmSessions = new ArrayList<>();
+    private List<Cinema> cinemas = new ArrayList<>();
+    private Map<Integer, Integer> exptFilms = new HashMap<>();
 
     @Before
     public void prepareData() {
@@ -44,9 +60,24 @@ public class FilmTester {
         * */
         films = DataCreator.prepareFilm(10);
         for (int i = 0; i < films.size(); i++) {
-            filmRepository.save(films.get(i));
+            filmDao.save(films.get(i));
         }
-        filmService.reload();
+
+        cinemas = DataCreator.prepareCinema(5);
+        for (Cinema cinema : cinemas) {
+            cinemaDao.save(cinema);
+        }
+
+        filmSessions = DataCreator.prepareFilmSession(25, 5, 10);
+        for (FilmSession filmSession : filmSessions) {
+            filmSessionDao.save(filmSession);
+            Timestamp today = FilmUtil.getTheStartOfDay(new Date());
+            Timestamp end = FilmUtil.getTheEndOfDay(new Date());
+            if (filmSession.getBeginTime().getTime() >= today.getTime()&&filmSession.getBeginTime().getTime() <= end.getTime()) {
+                exptFilms.put(filmSession.getFilmId(), 1);
+            }
+        }
+//        filmService.reload();
     }
 
     private Object[] filmToArray(Film a) {
@@ -57,7 +88,7 @@ public class FilmTester {
                 a.getCategory(),
                 a.getDirector(),
                 a.getLanguage(),
-                a.getPublishTime().getTime(),
+//                a.getPublishTime().getTime(),
                 a.getLastTime(),
                 a.getNation(),
                 a.getScore(),
@@ -67,12 +98,21 @@ public class FilmTester {
 
     @Test
     public void queryTest() throws Exception {
-//        cinemaRepository.reload();
         for (int i = 0; i < films.size(); i++) {
-            Film actual = films.get(i);
-            Film expe = filmService.findById(actual.getId());
+            Film expe = films.get(i);
+            Film actual = filmService.findById(expe.getId());
             Assert.assertArrayEquals(filmToArray(expe), filmToArray(actual));
+        }
     }
+
+    @Test
+    public void getFilmTest() throws Exception {
+        MyMessage myMessage = (MyMessage) filmService.getFilm();
+        Assert.assertEquals(1, myMessage.getStatus());
+        if (myMessage.getStatus() == 1) {
+            List<Film> actul = (List<Film>)myMessage.getMessage();
+            Assert.assertEquals(exptFilms.size(), actul.size());
+        }
     }
 
 }

@@ -91,13 +91,14 @@ public class CinemaPicTester {
     @Test
     public void queryCoverByCinemaIdTest() {
         for (Cinema cinema : cinemas) {
-            List<CinemaPic> cinemaPics = (List<CinemaPic>)((MyMessage)cinemaPicService.getCoverByCinemaId(cinema.getId())).getMessage();
-            if (cinemaPics == null) {
-                Assert.assertNull(covers.get(cinema.getId()));
+            List<CinemaPic> expts = covers.get(cinema.getId());
+            MyMessage message = (MyMessage)cinemaPicService.getCoverByCinemaId(cinema.getId());
+            if (expts == null) {
+                Assert.assertEquals(0, message.getStatus());
             } else {
+                List<CinemaPic> cinemaPics = (List<CinemaPic>)message.getMessage();
                 int count = 0;
                 for (CinemaPic cinemaPic : cinemaPics) {
-                    List<CinemaPic> expts = covers.get(cinema.getId());
                     for (int i = 0; i < expts.size(); i++) {
                         if (expts.get(i).getId() == cinemaPic.getId()) {
                             Assert.assertArrayEquals(toObjectArray(expts.get(i)), toObjectArray(cinemaPic));

@@ -14,16 +14,16 @@ import java.util.List;
 /**
  * Created by msi on 2017/6/6.
  */
-@CacheConfig(cacheNames = "filmSession")
+//@CacheConfig(cacheNames = "filmSession")
 public interface FilmSessionRepository extends JpaRepository<FilmSession, Integer> {
-    @Cacheable
+//    @Cacheable
     FilmSession findOne(Integer id);
 
-    @Cacheable
+//    @Cacheable
     @Query(value = "select f from FilmSession f where f.filmId=:fid AND f.cinemaId=:cid AND f.beginTime >= :bt AND f.beginTime <= :et")
     List<FilmSession> findByFilmIdAndCinemaIdAndBeginTimeGreaterThanAndEndTimeLessThen(@Param("fid") int filmId, @Param("cid") int cinemaId,
                                                                                        @Param("bt") Timestamp bt, @Param("et")  Timestamp et);
-    @Cacheable
+//    @Cacheable
     @Query(value = "select distinct f.filmId from FilmSession f where  f.beginTime >= :bt AND f.beginTime <= :et")
     List<Integer> findByBeginTimeGreaterThenAndEndTimeLessThen(@Param("bt") Timestamp bt,@Param("et") Timestamp et);
 }

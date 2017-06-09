@@ -10,4 +10,5 @@ import java.util.List;
 public interface FilmDao {
     Film findById(int id);
     void reload();
+    Film save(Film film);
 }

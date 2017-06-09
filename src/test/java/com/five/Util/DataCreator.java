@@ -48,14 +48,16 @@ public class DataCreator {
         return ans;
     }
 
-    public static List<Cinema> prepareCinemaWithSameCity(int n, int city_code) {
+    public static List<Cinema> prepareCinemaWithSameCity(int n, int city_code, double centerlo, double centerla) {
         List<Cinema> ans = new ArrayList<>();
+//        double centerlo = random.nextDouble()*5;
+//        double centerla = random.nextDouble()*5;
         for (int i = 0; i < n; i++) {
             String name = "cinema" + Integer.toString(i);
             String address = "address" + Integer.toString(i);
             String phone = Integer.toString(i);
-            double lo = random.nextDouble();
-            double la = random.nextDouble();
+            double lo = centerlo + 1.5*i;
+            double la = centerla + 1.5*i;
             int cityCode = city_code;
             Cinema cinema = new Cinema(name, address,phone, lo, la, cityCode);
             ans.add(cinema);
@@ -68,7 +70,7 @@ public class DataCreator {
         for (int i = 0; i < n; i++) {
             String path = "path" + Integer.toString(i);
             int type = random.nextDouble()>0.5?1:0;
-            int cinemaId = random.nextInt(cinemaIdMax);
+            int cinemaId = random.nextInt(cinemaIdMax)+1;
             CinemaPic cinemaPic = new CinemaPic(path, type, cinemaId);
             ans.add(cinemaPic);
         }
@@ -78,8 +80,8 @@ public class DataCreator {
     public static List<CinemaRemark> prepareCinemaRemark(int n,int userIdMax, int cinemaIdMax) {
         List<CinemaRemark> ans = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            int userId = random.nextInt(userIdMax);
-            int cinemaId = random.nextInt(cinemaIdMax);
+            int userId = random.nextInt(userIdMax)+1;
+            int cinemaId = random.nextInt(cinemaIdMax)+1;
             String content = "content" + Integer.toString(i);
             CinemaRemark cinemaRemark = new CinemaRemark(userId, cinemaId, content);
             ans.add(cinemaRemark);
@@ -113,7 +115,7 @@ public class DataCreator {
         for (int i = 0; i < n; i++) {
             String path = "path" + Integer.toString(i);
             int type = random.nextDouble()>0.5?1:0;
-            int filmId = random.nextInt(filmIdMax);
+            int filmId = random.nextInt(filmIdMax)+1;
             FilmPic filmPic = new FilmPic(path, type, filmId);
             ans.add(filmPic);
         }
@@ -123,8 +125,8 @@ public class DataCreator {
     public static List<FilmRemark> prepareFilmRemark(int n, int userIdMax, int filmIdMax) {
         List<FilmRemark> ans = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            int userId = random.nextInt(userIdMax);
-            int filmId = random.nextInt(filmIdMax);
+            int userId = random.nextInt(userIdMax)+1;
+            int filmId = random.nextInt(filmIdMax)+1;
             String content = "content" + Integer.toString(i);
             FilmRemark filmRemark = new FilmRemark(userId, filmId, content);
             ans.add(filmRemark);
@@ -141,9 +143,9 @@ public class DataCreator {
             long a = random.nextLong() > 0?random.nextLong()%86400000L:(-random.nextLong())%86400000L;
             Timestamp beginTime = new Timestamp(d.getTime() + a);
             Timestamp endTime = new Timestamp(beginTime.getTime() + 1296000000L);
-            int cinemaId = random.nextInt(cinemaIdMax);
+            int cinemaId = random.nextInt(cinemaIdMax)+1;
             int hallSittingId = i;
-            int filmId = random.nextInt(filmIdMax);
+            int filmId = random.nextInt(filmIdMax)+1;
             double price = random.nextDouble() * 15;
             FilmSession filmSession = new FilmSession(hall, beginTime, endTime, classification, price, cinemaId, hallSittingId, filmId);
             ans.add(filmSession);
@@ -174,12 +176,13 @@ public class DataCreator {
             OneSit oneSit = new OneSit(i, i, true);
             String sitting = '{' + "\"sit\":[{\"x\":"+Integer.toString(i)+",\"y\":"+Integer.toString(i)+"}]" +'}';
             double price = random.nextDouble()*15;
-            int filmSessionId = random.nextInt(filmSessionIdMax);
-            int userId = random.nextInt(userIdMax);
+            int filmSessionId = random.nextInt(filmSessionIdMax)+1;
+            int userId = random.nextInt(userIdMax)+1;
             ans.add(new Reservation(sitting, price, filmSessionId, userId));
         }
         return ans;
     }
+
 
     public static List<User> prepareUser(int n) {
         List<User> ans = new ArrayList<>();
