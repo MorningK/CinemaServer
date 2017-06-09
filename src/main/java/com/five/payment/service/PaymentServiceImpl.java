@@ -3,18 +3,13 @@ package com.five.payment.service;
 import com.five.order.model.Reservation;
 import com.five.order.service.OrderService;
 import com.five.order.utils.ClockThread;
-import com.five.order.utils.ThreadPool;
+import com.five.order.utils.ClockThreadPool;
 import com.five.payment.dao.WalletDao;
 import com.five.payment.model.Wallet;
 import com.five.user.model.MyMessage;
-import javafx.beans.binding.ObjectExpression;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * Created by msi on 2017/6/6.
@@ -31,7 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Object payOrder(int orderId) {
-        ClockThread clockThread = ThreadPool.getInstance().get(orderId);
+        ClockThread clockThread = ClockThreadPool.getInstance().get(orderId);
         if (clockThread == null) return new MyMessage(0, "订单已过期");
         Reservation reservation = orderService.findById(orderId);
         Wallet wallet = walletDao.findWalletByUserId(reservation.getUserId());

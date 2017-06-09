@@ -12,9 +12,17 @@ public class ClockThread implements Runnable{
     private Reservation order;
     private OrderService orderService;
 
-    public ClockThread(Reservation order, OrderService orderService) {
+    private int pos;
+
+    public void init(Reservation order, OrderService orderService) {
+        this.isPaid = false;
         this.order = order;
         this.orderService = orderService;
+        pos = -1;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 
     public void paid() {
@@ -24,13 +32,14 @@ public class ClockThread implements Runnable{
     @Override
     public void run() {
         try {
-            ThreadPool threadPool = ThreadPool.getInstance();
-            threadPool.put(order.getId(), this);
+            ClockThreadPool clockThreadPool = ClockThreadPool.getInstance();
+            clockThreadPool.put(order.getId(), this);
             Thread.sleep(1000 * 60 * 10);
             if (!isPaid) {
                 orderService.orderOutOfDate(order);
             }
-            threadPool.remove(order.getId());
+            clockThreadPool.remove(order.getId());
+            clockThreadPool.destoryThread(pos);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
