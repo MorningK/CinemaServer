@@ -1,5 +1,7 @@
 package com.five.user.model;
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,6 +11,9 @@ import java.io.Serializable;
 @Entity
 public class User implements Serializable {
 
+    public static final boolean NOT_ACTIVE = false;
+    public static final boolean ACTIVE = true;
+
     @Id
     @GeneratedValue
     private int id;
@@ -17,11 +22,24 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    public User() {}
+    @Email
+    @Column(nullable = false, unique = true)
+    private String email;
+    @Column(nullable = false)
+    private boolean state; // 激活状态, 初始为0,1为已激活
+    @Column
+    private String code; // 随机激活码
 
-    public User(String username, String password) {
+    public User() {
+        state = NOT_ACTIVE;
+    }
+
+    public User(String username, String password, String email, String code) {
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.code = code;
+        state = NOT_ACTIVE;
     }
 
     public int getId() {
@@ -48,11 +66,38 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", state=" + state +
+                ", code='" + code + '\'' +
                 '}';
     }
 }

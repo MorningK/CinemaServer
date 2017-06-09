@@ -12,9 +12,11 @@ import java.util.List;
  */
 @CacheConfig(cacheNames = "user")
 public interface UserRepository extends JpaRepository<User, Integer>{
-    @Cacheable
-    public List<User> findByUsername(String username);
+    public User findByUsername(String username);
 
-    @Cacheable
     public User findById(int id);
+
+    public User findByEmail(String email);
+
+    public User findByCode(String code);
 }

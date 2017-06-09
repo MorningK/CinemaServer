@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
     private UserRepository userRepository;
 
     @Override
-    public List<User> findByUsername(String username) {
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -44,5 +44,15 @@ public class UserDaoImpl implements UserDao {
     @CacheEvict(cacheNames = "user", allEntries = true)
     public void reload() {
 
+    }
+
+    @Override
+    public User findbyEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findByCode(String code) {
+        return userRepository.findByCode(code);
     }
 }

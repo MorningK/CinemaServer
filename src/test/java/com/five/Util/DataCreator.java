@@ -16,6 +16,7 @@ import com.five.order.model.Reservation;
 import com.five.payment.model.Wallet;
 import com.five.user.model.MyMessage;
 import com.five.user.model.User;
+import com.five.user.utils.CodeUtil;
 import net.sf.json.JSONArray;
 
 import java.sql.Time;
@@ -185,7 +186,9 @@ public class DataCreator {
         for (int i = 0; i < 10; i++) {
             String username = "username" + Integer.toString(i);
             String password = "password" + Integer.toString(i);
-            User user = new User(username, password);
+            String email = Integer.toString(i) + "@qq.com";
+            String code = CodeUtil.generateUniqueCode();
+            User user = new User(username, password, email, code);
             ans.add(user);
         }
         return ans;

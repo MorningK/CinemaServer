@@ -5,9 +5,7 @@ import com.five.user.model.User;
 import com.five.user.service.UserService;
 import com.five.user.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,6 +30,14 @@ public class UserController {
         MyMessage message = userService.doLogin(username, password, session);
         System.out.println(session.getAttribute("userId"));
         return message;
+    }
+
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
+    public @ResponseBody String active(@RequestParam(value="code", required=true)String code) {
+        if (userService.active(code)) {
+            return "激活成功";
+        }
+        return "激活失败";
     }
 
 }
