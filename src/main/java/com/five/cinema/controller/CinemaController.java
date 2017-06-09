@@ -17,10 +17,10 @@ public class CinemaController {
     private CinemaService cinemaService;
 
     @RequestMapping(value = "/cinema", method = RequestMethod.POST)
-    public Object findCinema(int citycode, double longtitude, double latitude, HttpSession session) {
-        int currentpage = 0;
-        if (session.getAttribute("page") != null) currentpage = Integer.parseInt(session.getAttribute("page").toString());
-        return cinemaService.getCinemas(citycode, longtitude, latitude, currentpage);
+    public Object findCinema(int citycode, double longtitude, double latitude, int page) {
+//        int currentpage = 0;
+//        if (session.getAttribute("page") != null) currentpage = Integer.parseInt(session.getAttribute("page").toString());
+        return cinemaService.getCinemas(citycode, longtitude, latitude, page);
     }
 
 

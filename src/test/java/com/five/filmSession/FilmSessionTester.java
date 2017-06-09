@@ -86,9 +86,7 @@ public class FilmSessionTester {
     public void queryByTime() {
         for (Long id : filmSessions.keySet()) {
             List<Integer> expt = films.get(id);
-
             Date d = new Date(id);
-//            Timestamp timestamp = new Timestamp(id + 3600000L);
             Timestamp bt = FilmUtil.getTheStartOfDay(d), st = FilmUtil.getTheEndOfDay(d);
             List<Integer> filmIds = filmSessionDao.findFilmIdByTime(bt, st);
             Assert.assertEquals(expt.size(), filmIds.size());
@@ -99,6 +97,14 @@ public class FilmSessionTester {
                 }
             }
             Assert.assertEquals(expt.size(), count);
+        }
+    }
+
+    @Test
+    public void getFilmSessionTest() {
+        for (Long id : films.keySet()) {
+            List<FilmSession> expt = filmSessions.get(id);
+            //todo
         }
     }
 }
