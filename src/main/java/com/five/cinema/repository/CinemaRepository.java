@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Created by msi on 2017/6/6.
  */
-@CacheConfig(cacheNames = "cinema")
+//@CacheConfig(cacheNames = "cinema")
 public interface CinemaRepository extends JpaRepository<Cinema, Integer> {
-    @Cacheable
+//    @Cacheable
     List<Cinema> findByCitycode(int citycode);
-    @Cacheable
+//    @Cacheable
     Cinema findOne(Integer id);
 
 }

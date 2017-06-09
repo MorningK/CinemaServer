@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by haoye on 17-6-6.
  */
-@CacheConfig(cacheNames = "reservation")
+//@CacheConfig(cacheNames = "reservation")
 public interface OrderRepository extends JpaRepository<Reservation, Integer> {
 
     @Modifying
     @Query(value="update Reservation r set r.status=:newStatus where r.id=:rid")
     int updateById(@Param("rid") int id, @Param("newStatus") int newStatus);
 
-    @Cacheable
+//    @Cacheable
     Reservation findOne(Integer id);
 }

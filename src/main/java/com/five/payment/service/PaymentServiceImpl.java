@@ -7,6 +7,7 @@ import com.five.order.utils.ThreadPool;
 import com.five.payment.dao.WalletDao;
 import com.five.payment.model.Wallet;
 import com.five.user.model.MyMessage;
+import javafx.beans.binding.ObjectExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
@@ -33,14 +34,13 @@ public class PaymentServiceImpl implements PaymentService {
         ClockThread clockThread = ThreadPool.getInstance().get(orderId);
         if (clockThread == null) return new MyMessage(0, "订单已过期");
         Reservation reservation = orderService.findById(orderId);
-        List<Wallet> wallets = walletDao.findWalletByUserId(reservation.getUserId());
-        if (wallets == null) {
+        Wallet wallet = walletDao.findWalletByUserId(reservation.getUserId());
+        if (wallet == null) {
             return new MyMessage(0, "支付失败，数据库无记录");
         }
-        if (wallets.size() != 1) {
+        if (wallet.getId() == -1) {
             return new MyMessage(0,"钱包异常，此用户拥有多个钱包");
         }
-        Wallet wallet = wallets.get(0);
         if (wallet.getBalance() > reservation.getPrice()) {
             double oldBalance = wallet.getBalance();
             Wallet payResult = walletDao.UpdateWalletBalanceById(wallet.getId(), wallet.getBalance()-reservation.getPrice());
@@ -84,15 +84,15 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Wallet findByUserId(int userId) {
-        List<Wallet> wallets = walletDao.findWalletByUserId(userId);
-        if (wallets == null) return null;
-        else if (wallets.size() > 1) {
+        Object obj = walletDao.findWalletByUserId(userId);
+        Wallet wallet = walletDao.findWalletByUserId(userId);
+        if (wallet == null) return null;
+        else if (wallet.getId() == -1) {
             //Todo
             // if wallet duplicate?
             return new Wallet(-1, 0);
 
-        } else if (wallets.size() == 0) return null;
-        else return wallets.get(0);
+        } else return wallet;
     }
 
     @Override

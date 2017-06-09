@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by haoye on 17-6-6.
  */
-@CacheConfig(cacheNames = "hallSitting")
+//@CacheConfig(cacheNames = "hallSitting")
 public interface HallSittingRepository extends JpaRepository<HallSitting, Integer> {
-    @Cacheable
+//    @Cacheable
     HallSitting findOne(Integer id);
 }

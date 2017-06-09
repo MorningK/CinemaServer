@@ -25,6 +25,8 @@ public class CinemaPic implements Serializable {
     @Column(nullable = false)
     private int cinemaId;
 
+    public CinemaPic() {}
+
     public CinemaPic(String path, int type, int cinemaId) {
         this.path = path;
         this.type = type;

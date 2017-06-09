@@ -9,8 +9,8 @@ import java.util.List;
  * Created by msi on 2017/6/6.
  */
 public interface CinemaDao {
-    List<Cinema> findByLocation(int citycode, double longtitude, double latitude, int currentpage);
-    void save(Cinema cinema);
+    List<Cinema> findByLocation(int citycode);
+    Cinema save(Cinema cinema);
     Cinema findById(int id);
     void reload();
 }

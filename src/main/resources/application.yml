@@ -1,12 +1,12 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/cinema?verifyServerCertificate=false&useSSL=false&requireSSL=false
-    url: jdbc:mysql://localhost:3306/cinema
-    username: root
-    password: root
-#    username: tester
-#    password: 123456789
+    url: jdbc:mysql://localhost:3306/cinema?verifyServerCertificate=false&useSSL=false&requireSSL=false
+#    url: jdbc:mysql://localhost:3306/cinema
+#    username: root
+#    password: root
+    username: tester
+    password: 123456789
   jpa:
     hibernate:
         ddl-auto: create

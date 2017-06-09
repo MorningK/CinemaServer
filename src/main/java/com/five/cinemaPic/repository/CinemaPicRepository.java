@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * Created by msi on 2017/6/7.
  */
-@CacheConfig(cacheNames = "cinemaPic")
+//@CacheConfig(cacheNames = "cinemaPic")
 public interface CinemaPicRepository extends JpaRepository<CinemaPic, Integer> {
-    @Cacheable
+//    @Cacheable
     List<CinemaPic> findByCinemaIdAndType(int cinemaId, int type);
 }

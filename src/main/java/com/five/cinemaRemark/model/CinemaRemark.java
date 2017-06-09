@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Created by msi on 2017/6/7.
@@ -22,7 +23,7 @@ public class CinemaRemark implements Serializable {
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)
-    private long time;
+    private Timestamp time;
 
     public CinemaRemark() {}
 
@@ -30,7 +31,7 @@ public class CinemaRemark implements Serializable {
         this.userId = userId;
         this.cinemaId = cinemaId;
         this.content = content;
-        this.time = System.currentTimeMillis();
+        this.time = new Timestamp(System.currentTimeMillis());
     }
 
     public int getId() {
@@ -65,11 +66,11 @@ public class CinemaRemark implements Serializable {
         this.content = content;
     }
 
-    public long getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 }

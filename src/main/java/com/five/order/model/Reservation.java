@@ -2,6 +2,7 @@ package com.five.order.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ public class Reservation implements Serializable {
     @GeneratedValue
     private int id;
     @Column(nullable = false)
-    private Date time;
+    private Timestamp time;
     @Column(nullable = false)
     private String sitting;
     @Column(nullable = false)
@@ -34,7 +35,7 @@ public class Reservation implements Serializable {
     public Reservation() {}
 
     public Reservation(String sitting, double price, int filmSessionId, int userId) {
-        this.time = new Date();
+        this.time = new Timestamp(System.currentTimeMillis());
         this.sitting = sitting;
         this.price = price;
         this.status = NOTPAID;
@@ -50,11 +51,11 @@ public class Reservation implements Serializable {
         this.id = id;
     }
 
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 

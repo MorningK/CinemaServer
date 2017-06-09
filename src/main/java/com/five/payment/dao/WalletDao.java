@@ -9,7 +9,7 @@ import java.util.List;
  * Created by msi on 2017/6/6.
  */
 public interface WalletDao {
-    List<Wallet> findWalletByUserId(int userId);
+    Wallet findWalletByUserId(int userId);
     Wallet UpdateWalletBalanceById(int id, double newBalance);
     Wallet addWalletForNewUserById(int userId, int balance);
     void reload();

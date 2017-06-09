@@ -47,6 +47,11 @@ public class CinemaTester {
     private List<Cinema> cinemas = null;
     private List<Cinema> cinemasWithSameCityCode = null;
 
+    public CinemaTester() {
+//        System.out.println("constttttt");
+
+    }
+
     @Before
     public void prepareData() {
         /*
@@ -60,13 +65,9 @@ public class CinemaTester {
             }
         }
 
-
-        /*
-        * Insert 10 cinema with same citycode
-        * */
         if (cinemasWithSameCityCode == null) {
             System.out.println("prepare cwcs");
-            cinemasWithSameCityCode = DataCreator.prepareCinemaWithSameCity(10, 11, 0.5, 0.5);
+            cinemasWithSameCityCode = DataCreator.prepareCinemaWithSameCity(200, 11, 0.5, 0.5);
             for (int i = 0; i < cinemasWithSameCityCode.size(); i++) {
                 cinemaDao.save(cinemasWithSameCityCode.get(i));
             }

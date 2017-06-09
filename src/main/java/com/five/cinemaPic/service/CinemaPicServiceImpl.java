@@ -31,7 +31,7 @@ public class CinemaPicServiceImpl implements CinemaPicService {
     public Object getCoverByCinemaId(int cinemaId) {
         Cinema cinema = cinemaService.findById(cinemaId);
         if (cinema == null) return new MyMessage(0, "电影院不存在");
-        List<CinemaPic> cinemaPics = cinemaPicDao.getCoverByCinemaId(cinemaId);
+        List<CinemaPic> cinemaPics = cinemaPicDao.getPicByCinemaIdAndType(cinemaId, CinemaPic.CP_COVER);
         if (cinemaPics == null) return new MyMessage(0,"找不到封面");
         if (cinemaPics.size() == 0) return new MyMessage(0,"找不到封面");
         else return new MyMessage(1, cinemaPics);
@@ -41,7 +41,7 @@ public class CinemaPicServiceImpl implements CinemaPicService {
     public Object getInsideByCinemaId(int cinemaId) {
         Cinema cinema = cinemaService.findById(cinemaId);
         if (cinema == null) return new MyMessage(0, "电影院不存在");
-        List<CinemaPic> cinemaPics = cinemaPicDao.getInsideByCinemaId(cinemaId);
+        List<CinemaPic> cinemaPics = cinemaPicDao.getPicByCinemaIdAndType(cinemaId, CinemaPic.CP_INSIDE);
         if (cinemaPics == null) return new MyMessage(0,"找不到内部照片");
         if (cinemaPics.size() == 0) return new MyMessage(0,"找不到内部照片");
         else return new MyMessage(1, cinemaPics);

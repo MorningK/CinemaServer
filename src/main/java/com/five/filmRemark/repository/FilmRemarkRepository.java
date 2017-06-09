@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by haoye on 17-6-6.
  */
-@CacheConfig(cacheNames = "filmRemark")
+
 public interface FilmRemarkRepository extends JpaRepository<FilmRemark, Integer> {
-    @Cacheable
+//    @Cacheable
     FilmRemark[] findByUserId(int userId);
 
-    @Cacheable
+//    @Cacheable
     FilmRemark[] findByFilmId(int filmId);
 }

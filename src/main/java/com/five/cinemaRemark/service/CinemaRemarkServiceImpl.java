@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by msi on 2017/6/7.
  */
@@ -45,8 +47,9 @@ public class CinemaRemarkServiceImpl implements CinemaRemarkService {
     public Object getCinemaRemarkByCinemaId(int cinemaId) {
         Cinema cinema = cinemaService.findById(cinemaId);
         if (cinema == null) return new MyMessage(0, "电影院不存在");
-        CinemaRemark[] cinemaRemarks = cinemaRemarkDao.findByCinemaId(cinemaId);
-        return new MyMessage( 1, cinemaRemarks);
+        List<CinemaRemark> cinemaRemarks = cinemaRemarkDao.findByCinemaId(cinemaId);
+        if (cinemaRemarks == null || cinemaRemarks.size() == 0) return new MyMessage(0, "无评论");
+        else return new MyMessage( 1, cinemaRemarks);
     }
 
     @Override
@@ -54,8 +57,9 @@ public class CinemaRemarkServiceImpl implements CinemaRemarkService {
         User user = userService.findById(userId);
         if (user == null) return new MyMessage(0, "用户不存在");
 
-        CinemaRemark[] cinemaRemarks = cinemaRemarkDao.findByUserId(userId);
-        return new MyMessage(1, cinemaRemarks);
+        List<CinemaRemark> cinemaRemarks = cinemaRemarkDao.findByUserId(userId);
+        if (cinemaRemarks == null || cinemaRemarks.size() == 0) return new MyMessage(0, "无评论");
+        else return new MyMessage( 1, cinemaRemarks);
     }
 
     @Override

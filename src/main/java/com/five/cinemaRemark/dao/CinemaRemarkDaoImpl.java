@@ -3,9 +3,10 @@ package com.five.cinemaRemark.dao;
 import com.five.cinemaRemark.model.CinemaRemark;
 import com.five.cinemaRemark.repository.CinemaRemarkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by msi on 2017/6/7.
@@ -18,17 +19,23 @@ public class CinemaRemarkDaoImpl implements CinemaRemarkDao {
     private CinemaRemarkRepository cinemaRemarkRepository;
 
     @Override
-    public void save(CinemaRemark cinemaRemark) {
-        cinemaRemarkRepository.save(cinemaRemark);
+    @Caching(evict = {
+    @CacheEvict(cacheNames = "cinemaRemark", key = "#p0.getCinemaId()"),
+    @CacheEvict(cacheNames = "cinemaRemark", key = "#p0.getUserId()")
+    })
+    public CinemaRemark save(CinemaRemark cinemaRemark) {
+        return cinemaRemarkRepository.save(cinemaRemark);
     }
 
     @Override
-    public CinemaRemark[] findByCinemaId(int cinemaId) {
+    @Cacheable(cacheNames = "cinemaRemark", key = "#p0", condition = "#result != null and #result.size() > 0")
+    public List<CinemaRemark> findByCinemaId(int cinemaId) {
         return cinemaRemarkRepository.findByCinemaId(cinemaId);
     }
 
     @Override
-    public CinemaRemark[] findByUserId(int userId) {
+    @Cacheable(cacheNames = "cinemaRemark", key = "#p0", condition = "#result != null and #result.size() > 0")
+    public List<CinemaRemark> findByUserId(int userId) {
         return cinemaRemarkRepository.findByUserId(userId);
     }
 

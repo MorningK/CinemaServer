@@ -29,15 +29,10 @@ public class FilmSessionServiceImpl implements FilmSessionService {
         Date d = bt;
         Timestamp et= getTheEndOfDay(d);
         List<FilmSession> filmsessions = filmSessionDao.findByFilmAndCinemaAndTime(filmId, cinemaId, bt, et);
-
-        String total = "", head = "{\"FilmSession\":[", tail = "]}";
-        for(FilmSession filmsession : filmsessions) {
-            total += filmsession.toString();
-        }
-        if (total.length() == 0) {
+        if (filmsessions == null || filmsessions.size() == 0) {
             return new MyMessage(0, "没有找到场次");
         } else {
-            return new MyMessage(1, head+total+tail);
+            return new MyMessage(1, filmsessions);
         }
     }
 

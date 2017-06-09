@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,12 +26,16 @@ public class WalletDaoImpl implements WalletDao {
     private WalletRepository walletRepository;
 
     @Override
-    public List<Wallet> findWalletByUserId(int userId) {
-        return walletRepository.findByUserId(userId);
+    @Cacheable(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
+    public Wallet findWalletByUserId(int userId) {
+        List<Wallet> wallets = walletRepository.findByUserId(userId);
+        if (wallets.size() == 0) return null;
+        else if (wallets.size() != 1) return new Wallet(-1, 0);
+        else return wallets.get(0);
     }
 
     @Override
-    @CachePut(cacheNames = "wallet")
+    @CachePut(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
     public Wallet UpdateWalletBalanceById(int id, double newBalance) {
         Wallet wallet = walletRepository.findOne(id);
         wallet.setBalance(newBalance);
@@ -38,7 +43,7 @@ public class WalletDaoImpl implements WalletDao {
     }
 
     @Override
-    @CachePut(cacheNames = "wallet")
+    @CachePut(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
     public Wallet addWalletForNewUserById(int userId, int balance) {
         Wallet wallet = new Wallet(userId, balance);
         return walletRepository.save(wallet);

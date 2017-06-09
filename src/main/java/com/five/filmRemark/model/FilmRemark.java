@@ -23,7 +23,7 @@ public class FilmRemark implements Serializable {
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)
-    private long time;
+    private Timestamp time;
 
     public FilmRemark() {}
 
@@ -31,7 +31,7 @@ public class FilmRemark implements Serializable {
         this.userId = userId;
         this.filmId = filmId;
         this.content = content;
-        this.time = System.currentTimeMillis();
+        this.time = new Timestamp(System.currentTimeMillis());
     }
 
     public int getUserId() {
@@ -58,11 +58,11 @@ public class FilmRemark implements Serializable {
         this.content = content;
     }
 
-    public long getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 

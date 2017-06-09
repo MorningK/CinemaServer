@@ -16,15 +16,15 @@ public class ThreadPool {
 
     public ThreadPool() {}
 
-    public void put(Integer orderId, ClockThread clockThread) {
+    public synchronized void put(Integer orderId, ClockThread clockThread) {
         threadPool.put(orderId, clockThread);
     }
 
-    public void remove(Integer orderId) {
+    public synchronized void remove(Integer orderId) {
         threadPool.remove(orderId);
     }
 
-    public ClockThread get(Integer orderId) {
+    public synchronized ClockThread get(Integer orderId) {
         return threadPool.get(orderId);
     }
 }
