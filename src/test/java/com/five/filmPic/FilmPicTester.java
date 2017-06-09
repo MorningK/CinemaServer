@@ -94,22 +94,15 @@ public class FilmPicTester {
     public void queryCoverByFilmIdTest() {
         for (Film film : films) {
             List<FilmPic> expts = covers.get(film.getId());
-            MyMessage message = (MyMessage)filmPicService.getFilmCover(film.getId());
+            String[] filmPics = (String[])filmPicService.getFilmCover(film.getId());
             if (expts == null) {
-                Assert.assertEquals(0, message.getStatus());
+                Assert.assertEquals(0, filmPics.length);
             } else {
-                List<FilmPic> filmPics = (List<FilmPic>)message.getMessage();
-                int count = 0;
-                for (FilmPic filmPic : filmPics) {
-                    for (int i = 0; i < expts.size(); i++) {
-                        if (expts.get(i).getId() == filmPic.getId()) {
-                            Assert.assertArrayEquals(toObjectArray(expts.get(i)), toObjectArray(filmPic));
-                            count++;
-                            break;
-                        }
-                    }
+                Assert.assertEquals(expts.size(), filmPics.length);
+                for (int i = 0; i < expts.size(); i++) {
+                    Assert.assertEquals(expts.get(i).getPath(), filmPics[i]);
                 }
-                Assert.assertEquals(count, filmPics.size());
+
             }
         }
     }
@@ -117,22 +110,16 @@ public class FilmPicTester {
     @Test
     public void queryInsideByFilmIdTest() {
         for (Film film : films) {
-            List<FilmPic> filmPics = (List<FilmPic>)((MyMessage)filmPicService.getFilmStill(film.getId())).getMessage();
-            if (filmPics == null) {
-                Assert.assertNull(insides.get(film.getId()));
+            List<FilmPic> expts = insides.get(film.getId());
+            String[] filmPics = (String[])filmPicService.getFilmStill(film.getId());
+            if (expts == null) {
+                Assert.assertEquals(0, filmPics.length);
             } else {
-                int count = 0;
-                for (FilmPic filmPic : filmPics) {
-                    List<FilmPic> expts = insides.get(film.getId());
-                    for (int i = 0; i < expts.size(); i++) {
-                        if (expts.get(i).getId() == filmPic.getId()) {
-                            Assert.assertArrayEquals(toObjectArray(expts.get(i)), toObjectArray(filmPic));
-                            count++;
-                            break;
-                        }
-                    }
+                Assert.assertEquals(expts.size(), filmPics.length);
+                for (int i = 0; i < expts.size(); i++) {
+                    Assert.assertEquals(expts.get(i).getPath(), filmPics[i]);
                 }
-                Assert.assertEquals(count, filmPics.size());
+
             }
         }
     }

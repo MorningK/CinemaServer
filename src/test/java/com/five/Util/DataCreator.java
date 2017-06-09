@@ -114,7 +114,7 @@ public class DataCreator {
         List<FilmPic> ans = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             String path = "path" + Integer.toString(i);
-            int type = random.nextDouble()>0.5?1:0;
+            int type = random.nextDouble()>0.5?FilmPic.COVER:FilmPic.STILL;
             int filmId = random.nextInt(filmIdMax)+1;
             FilmPic filmPic = new FilmPic(path, type, filmId);
             ans.add(filmPic);
@@ -186,7 +186,7 @@ public class DataCreator {
 
     public static List<User> prepareUser(int n) {
         List<User> ans = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < n; i++) {
             String username = "username" + Integer.toString(i);
             String password = "password" + Integer.toString(i);
             String email = Integer.toString(i) + "@qq.com";

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by haoye on 17-6-7.
  */
@@ -26,10 +28,10 @@ public class FilmPicServiceImpl implements FilmPicService {
             return new MyMessage(0, "电影不存在");
         }
 
-        FilmPic[] filmPics = filmPicDao.findByFilmIdAndType(filmId, FilmPic.COVER);
-        String[] result = new String[filmPics.length];
-        for (int i = 0; i < filmPics.length; i++) {
-            result[i] = filmPics[i].getPath();
+        List<FilmPic> filmPics = filmPicDao.findByFilmIdAndType(filmId, FilmPic.COVER);
+        String[] result = new String[filmPics.size()];
+        for (int i = 0; i < filmPics.size(); i++) {
+            result[i] = filmPics.get(i).getPath();
         }
         return result;
     }
@@ -40,10 +42,10 @@ public class FilmPicServiceImpl implements FilmPicService {
             return new MyMessage(0, "电影不存在");
         }
 
-        FilmPic[] filmPics = filmPicDao.findByFilmIdAndType(filmId, FilmPic.STILL);
-        String[] result = new String[filmPics.length];
-        for (int i = 0; i < filmPics.length; i++) {
-            result[i] = filmPics[i].getPath();
+        List<FilmPic> filmPics = filmPicDao.findByFilmIdAndType(filmId, FilmPic.STILL);
+        String[] result = new String[filmPics.size()];
+        for (int i = 0; i < filmPics.size(); i++) {
+            result[i] = filmPics.get(i).getPath();
         }
         return result;
     }

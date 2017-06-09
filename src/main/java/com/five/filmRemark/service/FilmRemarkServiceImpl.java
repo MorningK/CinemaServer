@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by haoye on 17-6-6.
  */
@@ -46,8 +48,9 @@ public class FilmRemarkServiceImpl implements FilmRemarkService{
 
         Film film = filmService.findById(filmId);
         if (film == null) return new MyMessage(0, "电影不存在");
-        FilmRemark[] filmRemarks = filmRemarkDao.findByFilmId(filmId);
-        return filmRemarks;
+        List<FilmRemark> filmRemarks = filmRemarkDao.findByFilmId(filmId);
+        if (filmRemarks == null||filmRemarks.size() == 0) return new MyMessage(0, "无评论");
+        return new MyMessage(1,filmRemarks);
     }
 
     @Override
@@ -55,7 +58,8 @@ public class FilmRemarkServiceImpl implements FilmRemarkService{
         User user = userService.findById(userId);
         if (user == null) return new MyMessage(0, "用户不存在");
 
-        FilmRemark[] filmRemarks = filmRemarkDao.findByUserId(userId);
-        return filmRemarks;
+        List<FilmRemark> filmRemarks = filmRemarkDao.findByUserId(userId);
+        if (filmRemarks == null||filmRemarks.size() == 0) return new MyMessage(0, "无评论");
+        return new MyMessage(1,filmRemarks);
     }
 }

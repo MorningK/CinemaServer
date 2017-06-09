@@ -54,8 +54,8 @@ public class UserTester {
         /*
         * Register 10 user
         * */
-        users = DataCreator.prepareUser(10);
-        for (int i = 0; i < 10; i++) {
+        users = DataCreator.prepareUser(1000);
+        for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
 //            userDao.save(user);
             MyMessage message = userService.doRegister(user);

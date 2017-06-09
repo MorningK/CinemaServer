@@ -8,6 +8,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by haoye on 17-6-7.
  */
@@ -20,8 +22,8 @@ public class FilmPicDaoImpl implements FilmPicDao {
     private FilmPicRepository filmPicRepository;
 
     @Override
-    @Cacheable
-    public FilmPic[] findByFilmIdAndType(int filmId, int type) {
+    @Cacheable(cacheNames = "filmPic", condition = "#result != null and #result.size() > 0")
+    public List<FilmPic> findByFilmIdAndType(int filmId, int type) {
         return filmPicRepository.findByFilmIdAndType(filmId, type);
     }
 }
