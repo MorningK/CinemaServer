@@ -2,16 +2,11 @@ package com.five.user;
 
 import com.five.CinemaApplication;
 import com.five.Util.DataCreator;
-import com.five.cinema.dao.CinemaDao;
-import com.five.cinema.model.Cinema;
-import com.five.cinema.repository.CinemaRepository;
-import com.five.cinema.service.CinemaService;
 import com.five.payment.model.Wallet;
 import com.five.payment.service.PaymentService;
 import com.five.user.dao.UserDao;
 import com.five.user.model.MyMessage;
 import com.five.user.model.User;
-import com.five.user.repository.UserRepository;
 import com.five.user.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,13 +18,9 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by msi on 2017/6/8.
