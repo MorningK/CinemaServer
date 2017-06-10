@@ -144,7 +144,7 @@ public class DataCreator {
             Timestamp beginTime = new Timestamp(d.getTime() + a);
             Timestamp endTime = new Timestamp(beginTime.getTime() + 1296000000L);
             int cinemaId = random.nextInt(cinemaIdMax)+1;
-            int hallSittingId = i;
+            int hallSittingId = i+1;
             int filmId = random.nextInt(filmIdMax)+1;
             double price = random.nextDouble() * 15;
             FilmSession filmSession = new FilmSession(hall, beginTime, endTime, classification, price, cinemaId, hallSittingId, filmId);
@@ -169,12 +169,11 @@ public class DataCreator {
         return ans;
     }
 
-    public static List<Reservation> prepareOrder(int n, int userIdMax, int filmSessionIdMax) {
+    public static List<Reservation> prepareOrder(int n, int userIdMax, int filmSessionIdMax, int x, int y) {
         List<Reservation> ans = new ArrayList<>();
-
         for (int i = 0; i < n; i++) {
             OneSit oneSit = new OneSit(i, i, true);
-            String sitting = '{' + "\"sit\":[{\"x\":"+Integer.toString(i)+",\"y\":"+Integer.toString(i)+"}]" +'}';
+            String sitting = "[{\"x\":"+Integer.toString(i/y)+",\"y\":"+Integer.toString(i%y)+"}]";
             double price = random.nextDouble()*15;
             int filmSessionId = random.nextInt(filmSessionIdMax)+1;
             int userId = random.nextInt(userIdMax)+1;

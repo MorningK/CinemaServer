@@ -49,6 +49,11 @@ public class CinemaServieceImpl implements CinemaService  {
         cinemaDao.reload();
     }
 
+    @Override
+    public List<Integer> findIdByCitycode(int citycode) {
+        return cinemaDao.findIdByCitycode(citycode);
+    }
+
     private final class CompareLocation implements Comparator<Cinema> {
         double lo, la;
 
@@ -71,6 +76,7 @@ public class CinemaServieceImpl implements CinemaService  {
             return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
         }
     }
+
 
 }
 

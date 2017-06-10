@@ -33,7 +33,8 @@ public class FilmPicServiceImpl implements FilmPicService {
         for (int i = 0; i < filmPics.size(); i++) {
             result[i] = filmPics.get(i).getPath();
         }
-        return result;
+        if (result.length == 0) return new MyMessage(0,"无照片");
+        return new MyMessage(1, result);
     }
 
     @Override
@@ -47,6 +48,7 @@ public class FilmPicServiceImpl implements FilmPicService {
         for (int i = 0; i < filmPics.size(); i++) {
             result[i] = filmPics.get(i).getPath();
         }
-        return result;
+        if (result.length == 0) return new MyMessage(0,"无照片");
+        return new MyMessage(1, result);
     }
 }

@@ -13,4 +13,6 @@ public interface FilmSessionService {
     Object getFilmSession(int filmId, int cinemaId, String time);
     FilmSession findById(int id);
     List<Integer> findFilmIdByTime(Timestamp bt, Timestamp et);
+    List<Integer> findFilmIdByCinemaAndTime(int cinemaId, Timestamp bt, Timestamp et);
+    List<Integer> findFilmIdByCinemasAntTime(List<Integer> cinemaId, Timestamp bt, Timestamp et);
 }

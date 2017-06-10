@@ -48,4 +48,9 @@ public class CinemaDaoImpl implements CinemaDao {
 
     }
 
+    @Override
+    public List<Integer> findIdByCitycode(int citycode) {
+        return cinemaRepository.findIdByCitycode(citycode);
+    }
+
 }

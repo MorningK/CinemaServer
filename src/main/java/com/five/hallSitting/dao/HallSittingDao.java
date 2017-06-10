@@ -7,5 +7,5 @@ import com.five.hallSitting.model.HallSitting;
  */
 public interface HallSittingDao {
     HallSitting findById(int hallSittingId);
-    void save(HallSitting hallSitting);
+    HallSitting save(HallSitting hallSitting);
 }

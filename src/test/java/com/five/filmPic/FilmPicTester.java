@@ -94,7 +94,8 @@ public class FilmPicTester {
     public void queryCoverByFilmIdTest() {
         for (Film film : films) {
             List<FilmPic> expts = covers.get(film.getId());
-            String[] filmPics = (String[])filmPicService.getFilmCover(film.getId());
+            MyMessage message = (MyMessage) filmPicService.getFilmCover(film.getId());
+            String[] filmPics = (String[])message.getMessage();
             if (expts == null) {
                 Assert.assertEquals(0, filmPics.length);
             } else {
@@ -111,7 +112,8 @@ public class FilmPicTester {
     public void queryInsideByFilmIdTest() {
         for (Film film : films) {
             List<FilmPic> expts = insides.get(film.getId());
-            String[] filmPics = (String[])filmPicService.getFilmStill(film.getId());
+            MyMessage message = (MyMessage) filmPicService.getFilmStill(film.getId());
+            String[] filmPics = (String[])message.getMessage();
             if (expts == null) {
                 Assert.assertEquals(0, filmPics.length);
             } else {

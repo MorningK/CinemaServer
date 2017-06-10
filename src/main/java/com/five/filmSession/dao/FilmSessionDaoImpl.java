@@ -48,4 +48,15 @@ public class FilmSessionDaoImpl implements FilmSessionDao {
         return filmSessionRepository.save(filmSession);
     }
 
+    @Override
+    @Cacheable(cacheNames = "filmSession")
+    public List<Integer> findByCinemaIdAndTime(int cinemaId, Timestamp bt, Timestamp et) {
+        return filmSessionRepository.findByCinemaIdAndTime(cinemaId, bt, et);
+    }
+
+    @Override
+    public List<Integer> findByCinemasAntTime(List<Integer> cinemaId, Timestamp bt, Timestamp et) {
+        return filmSessionRepository.findByCinemasAntTime(cinemaId, bt, et);
+    }
+
 }

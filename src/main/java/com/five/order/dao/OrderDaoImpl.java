@@ -32,7 +32,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    @CachePut(cacheNames = "reservation", key = "#p0.getId()")
+    @CachePut(cacheNames = "reservation", key = "#p0")
     public int UpdateStatusById(int id, int status) {
         return orderRepository.updateById(id, status);
     }

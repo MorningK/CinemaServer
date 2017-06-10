@@ -28,6 +28,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.exp;
 
 /**
  * Created by msi on 2017/6/8.
@@ -52,6 +53,9 @@ public class FilmTester {
     private List<FilmSession> filmSessions = new ArrayList<>();
     private List<Cinema> cinemas = new ArrayList<>();
     private Map<Integer, Integer> exptFilms = new HashMap<>();
+    private Map<Integer, List<Film>> divideByCitycode = new HashMap<>();
+    private Map<Integer, List<Film>> divideByCinemaId = new HashMap<>();
+
 
     @Before
     public void prepareData() {
@@ -75,7 +79,40 @@ public class FilmTester {
             Timestamp end = FilmUtil.getTheEndOfDay(new Date());
             if (filmSession.getBeginTime().getTime() >= today.getTime()&&filmSession.getBeginTime().getTime() <= end.getTime()) {
                 exptFilms.put(filmSession.getFilmId(), 1);
+                int tempcity = cinemas.get(filmSession.getCinemaId() - 1).getCitycode();
+                if (divideByCitycode.get(tempcity) == null) {
+                    List<Film> templ = new ArrayList<>();
+                    templ.add(films.get(filmSession.getFilmId() - 1));
+                    divideByCitycode.put(tempcity, templ);
+                } else {
+                    boolean flag = true;
+                    Film tempf = films.get(filmSession.getFilmId() - 1);
+                    for (Film film : divideByCitycode.get(tempcity)) {
+                        if (film.getId() == tempf.getId()) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) divideByCitycode.get(tempcity).add(tempf);
+                }
+                int tempcid = filmSession.getCinemaId();
+                if (divideByCinemaId.get(tempcid) == null) {
+                    List<Film> templ = new ArrayList<>();
+                    templ.add(films.get(filmSession.getFilmId() - 1));
+                    divideByCinemaId.put(tempcid, templ);
+                } else {
+                    boolean flag = true;
+                    Film tempf = films.get(filmSession.getFilmId() - 1);
+                    for (Film film : divideByCinemaId.get(tempcid)) {
+                        if (film.getId() == tempf.getId()) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) divideByCinemaId.get(tempcid).add(tempf);
+                }
             }
+
         }
 //        filmService.reload();
     }
@@ -107,12 +144,35 @@ public class FilmTester {
 
     @Test
     public void getFilmTest() throws Exception {
-        MyMessage myMessage = (MyMessage) filmService.getFilm();
-        Assert.assertEquals(1, myMessage.getStatus());
-        if (myMessage.getStatus() == 1) {
-            List<Film> actul = (List<Film>)myMessage.getMessage();
-            Assert.assertEquals(exptFilms.size(), actul.size());
+        for (Integer citycode : divideByCitycode.keySet()) {
+            MyMessage myMessage = (MyMessage) filmService.getFilm(citycode);
+            Assert.assertEquals(1, myMessage.getStatus());
+            if (myMessage.getStatus() == 1) {
+                List<Film> actul = (List<Film>)myMessage.getMessage();
+                List<Film> expt = divideByCitycode.get(citycode);
+                Assert.assertEquals(expt.size(), actul.size());
+                for (int i = 0 ; i < expt.size(); i++) {
+                    Assert.assertArrayEquals(filmToArray(expt.get(i)), filmToArray(actul.get(i)));
+                }
+            }
         }
+
     }
 
+
+    @Test
+    public void getFilmByCinemaIdTest() throws Exception {
+        for (Integer cid : divideByCinemaId.keySet()) {
+            MyMessage myMessage = (MyMessage) filmService.getFilmByCinema(cid);
+            Assert.assertEquals(1, myMessage.getStatus());
+            if (myMessage.getStatus() == 1) {
+                List<Film> actul = (List<Film>)myMessage.getMessage();
+                List<Film> expt = divideByCinemaId.get(cid);
+                Assert.assertEquals(expt.size(), actul.size());
+                for (int i = 0 ; i < expt.size(); i++) {
+                    Assert.assertArrayEquals(filmToArray(expt.get(i)), filmToArray(actul.get(i)));
+                }
+            }
+        }
+    }
 }

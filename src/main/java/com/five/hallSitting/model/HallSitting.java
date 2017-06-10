@@ -14,7 +14,7 @@ public class HallSitting implements Serializable {
     @Id
     @GeneratedValue
     private int id;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10000)
     private String sit; // 已经有人的座位
 //    @Column(nullable = false)
 //    private int hallSitId;

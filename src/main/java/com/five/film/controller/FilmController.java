@@ -14,9 +14,14 @@ public class FilmController {
     @Autowired
     private FilmService filmService;
 
-    @RequestMapping(value = "/film", method = RequestMethod.GET)
-    public Object getFilm() {
-        return filmService.getFilm();
+    @RequestMapping(value = "/film", method = RequestMethod.POST)
+    public Object getFilm(int citycode) {
+        return filmService.getFilm(citycode);
     }
 
+
+    @RequestMapping(value = "/filmByCinemaId", method = RequestMethod.POST)
+    public Object getFilmByCitycode(int cinemaId) {
+        return filmService.getFilmByCinema(cinemaId);
+    }
 }
