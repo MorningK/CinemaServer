@@ -18,6 +18,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by MyComputer on 2017/6/10.
@@ -55,15 +57,33 @@ public class RedisConfig extends CachingConfigurerSupport {
             @Override
             public Object generate(Object o, Method method, Object... objects) {
                 StringBuilder sb = new StringBuilder();
-                sb.append(o.getClass().getName());
-                sb.append(method.getName());
-                CacheConfig annotation = o.getClass().getAnnotation(CacheConfig.class);
-                if (annotation != null) {
-                    sb.append("." + annotation.cacheNames()[0] + ".");
-                    System.out.println(annotation.cacheNames()[0]);
-                }
-                for (Object obj : objects) {
-                    sb.append(obj.toString());
+                NeoCachePut neoCachePutAnnotation = method.getAnnotation(NeoCachePut.class);
+
+                if (neoCachePutAnnotation == null) {
+                    sb.append(o.getClass().getName());
+                    CacheConfig annotation = o.getClass().getAnnotation(CacheConfig.class);
+                    if (annotation != null) {
+                        sb.append("." + annotation.cacheNames()[0] + ".");
+                    }
+                    sb.append(method.getName());
+                    for (Object obj : objects) {
+                        sb.append(obj.toString());
+                    }
+                } else {
+                    sb.append(o.getClass().getName());
+                    CacheConfig annotation = o.getClass().getAnnotation(CacheConfig.class);
+                    if (annotation != null) {
+                        sb.append("." + annotation.cacheNames()[0] + ".");
+                    }
+                    Map<String, List<String>> temp = MapDecode.MapDecoder(neoCachePutAnnotation.maps());
+                    for (String methodName : temp.keySet()) {
+                        sb.append(methodName);
+                        List<String> fields = temp.get(methodName);
+                        for (String field : fields) {
+                            sb.append(field);
+                        }
+                    }
+
                 }
                 System.out.println("keyGenerator=" + sb.toString());
                 return sb.toString();
