@@ -1,4 +1,4 @@
-package com.five.httpSession;
+package com.five.config.httpSession;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.session.data.redis.config.ConfigureRedisAction;

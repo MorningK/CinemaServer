@@ -21,34 +21,38 @@ public class CinemaDaoImpl implements CinemaDao {
     private CinemaRepository cinemaRepository;
 
     @Override
-    @Cacheable(cacheNames = "cinema", key = "#p0", condition = "#result != null and #result.size() > 0")
+//    @Cacheable(cacheNames = "cinema", key = "#p0", condition = "#result != null and #result.size() > 0")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<Cinema> findByLocation(int citycode) {
         return cinemaRepository.findByCitycode(citycode);
     }
 
     @Override
-    @Caching(put = {
-    @CachePut(cacheNames = "cinema", key = "#p0.getId()", condition = "#p0 != null"),
-    }, evict = {
-    @CacheEvict(cacheNames = "cinema", key = "#result.getCitycode()", condition = "#result != null" )
-    })
+//    @Caching(put = {
+//    @CachePut(cacheNames = "cinema", key = "#p0.getId()", condition = "#p0 != null"),
+//    }, evict = {
+//    @CacheEvict(cacheNames = "cinema", key = "#result.getCitycode()", condition = "#result != null" )
+//    })
+    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public Cinema save(Cinema cinema) {
         return cinemaRepository.save(cinema);
     }
 
     @Override
-    @Cacheable(cacheNames = "cinema", key = "#result.getId()", condition = "#result != null")
+//    @Cacheable(cacheNames = "cinema", key = "#result.getId()", condition = "#result != null")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public Cinema findById(int id) {
         return cinemaRepository.findOne(id);
     }
 
     @Override
-    @CacheEvict(cacheNames = "cinema", allEntries = true)
+//    @CacheEvict(cacheNames = "cinema", allEntries = true)
     public void reload() {
 
     }
 
     @Override
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<Integer> findIdByCitycode(int citycode) {
         return cinemaRepository.findIdByCitycode(citycode);
     }

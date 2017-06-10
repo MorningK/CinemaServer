@@ -26,7 +26,8 @@ public class WalletDaoImpl implements WalletDao {
     private WalletRepository walletRepository;
 
     @Override
-    @Cacheable(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
+//    @Cacheable(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public Wallet findWalletByUserId(int userId) {
         List<Wallet> wallets = walletRepository.findByUserId(userId);
         if (wallets.size() == 0) return null;
@@ -35,7 +36,8 @@ public class WalletDaoImpl implements WalletDao {
     }
 
     @Override
-    @CachePut(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
+//    @CachePut(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
+    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public Wallet UpdateWalletBalanceById(int id, double newBalance) {
         Wallet wallet = walletRepository.findOne(id);
         wallet.setBalance(newBalance);
@@ -43,14 +45,15 @@ public class WalletDaoImpl implements WalletDao {
     }
 
     @Override
-    @CachePut(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
+//    @CachePut(cacheNames = "wallet", key = "#result.getUserId()", condition = "#result != null")
+    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public Wallet addWalletForNewUserById(int userId, int balance) {
         Wallet wallet = new Wallet(userId, balance);
         return walletRepository.save(wallet);
     }
 
     @Override
-    @CacheEvict(cacheNames = "wallet", allEntries = true)
+//    @CacheEvict(cacheNames = "wallet", allEntries = true)
     public void reload() {
 
     }

@@ -19,22 +19,25 @@ public class FilmRemarkDaoImpl implements FilmRemarkDao {
     private FilmRemarkRepository filmRemarkRepository;
 
     @Override
-    @Caching(evict = {
-    @CacheEvict(value = "filmRemark", key = "#p0.getFilmId()"),
-    @CacheEvict(value = "filmRemark", key = "#p0.getUserId()")
-    })
+//    @Caching(evict = {
+//    @CacheEvict(value = "filmRemark", key = "#p0.getFilmId()"),
+//    @CacheEvict(value = "filmRemark", key = "#p0.getUserId()")
+//    })
+    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public FilmRemark save(FilmRemark filmRemark) {
         return filmRemarkRepository.save(filmRemark);
     }
 
     @Override
-    @Cacheable(value = "filmRemark")
+//    @Cacheable(value = "filmRemark")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<FilmRemark> findByFilmId(int filmId) {
         return filmRemarkRepository.findByFilmId(filmId);
     }
 
     @Override
-    @Cacheable(value = "filmRemark")
+//    @Cacheable(value = "filmRemark")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<FilmRemark> findByUserId(int userId) {
         return filmRemarkRepository.findByUserId(userId);
     }

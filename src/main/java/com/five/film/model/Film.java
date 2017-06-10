@@ -1,10 +1,10 @@
 package com.five.film.model;
 
-import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.DocumentId;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
+//import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
+//import org.hibernate.search.annotations.Analyzer;
+//import org.hibernate.search.annotations.DocumentId;
+//import org.hibernate.search.annotations.Field;
+//import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

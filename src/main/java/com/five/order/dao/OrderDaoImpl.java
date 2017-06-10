@@ -19,26 +19,30 @@ public class OrderDaoImpl implements OrderDao {
     private OrderRepository orderRepository;
 
     @Override
-    @CachePut(cacheNames = "reservation", key = "#result.getId()", condition = "#result != null")
+//    @CachePut(cacheNames = "reservation", key = "#result.getId()", condition = "#result != null")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public Reservation save(int userId, int filmSessionId, String orderSit, double price) {
         Reservation order = new Reservation(orderSit, price, filmSessionId, userId);
         return orderRepository.save(order);
     }
 
     @Override
-    @CachePut(cacheNames = "reservation", key = "#p0.getId()")
+//    @CachePut(cacheNames = "reservation", key = "#p0.getId()")
+    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public void orderOutOfDate(Reservation order) {
         orderRepository.save(order);
     }
 
     @Override
-    @CachePut(cacheNames = "reservation", key = "#p0")
+//    @CachePut(cacheNames = "reservation", key = "#p0")
+    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public int UpdateStatusById(int id, int status) {
         return orderRepository.updateById(id, status);
     }
 
     @Override
-    @Cacheable(cacheNames = "reservation", key = "#result.getId()", condition = "#result != null")
+//    @Cacheable(cacheNames = "reservation", key = "#result.getId()", condition = "#result != null")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public Reservation findById(int id) {
         return orderRepository.findOne(id);
     }

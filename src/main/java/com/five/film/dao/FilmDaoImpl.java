@@ -20,19 +20,21 @@ public class FilmDaoImpl implements FilmDao {
     private FilmRepository filmRepository;
 
     @Override
-    @Cacheable(cacheNames = "film", key = "#result.getId()", condition = "#result != null")
+//    @Cacheable(cacheNames = "film", key = "#result.getId()", condition = "#result != null")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public Film findById(int id) {
         return filmRepository.findById(id);
     }
 
     @Override
-    @CacheEvict(cacheNames = "film", allEntries = true)
+//    @CacheEvict(cacheNames = "film", allEntries = true)
     public void reload() {
 
     }
 
     @Override
-    @CachePut(cacheNames = "film", key = "#result.getId()", condition = "#result != null")
+//    @CachePut(cacheNames = "film", key = "#result.getId()", condition = "#result != null")
+    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public Film save(Film film) {
         return filmRepository.save(film);
     }

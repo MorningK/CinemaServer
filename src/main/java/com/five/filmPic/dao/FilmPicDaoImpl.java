@@ -22,7 +22,8 @@ public class FilmPicDaoImpl implements FilmPicDao {
     private FilmPicRepository filmPicRepository;
 
     @Override
-    @Cacheable(cacheNames = "filmPic", condition = "#result != null and #result.size() > 0")
+//    @Cacheable(cacheNames = "filmPic", condition = "#result != null and #result.size() > 0")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<FilmPic> findByFilmIdAndType(int filmId, int type) {
         return filmPicRepository.findByFilmIdAndType(filmId, type);
     }

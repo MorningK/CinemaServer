@@ -14,12 +14,7 @@ import java.util.List;
 /**
  * Created by msi on 2017/6/6.
  */
-//@CacheConfig(cacheNames = "wallet")
 public interface WalletRepository extends JpaRepository<Wallet, Integer> {
-
-//    @Cacheable
     List<Wallet> findByUserId(int userId);
-
-//    @Cacheable
     Wallet findOne(Integer id);
 }

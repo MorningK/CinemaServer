@@ -19,28 +19,31 @@ public class CinemaRemarkDaoImpl implements CinemaRemarkDao {
     private CinemaRemarkRepository cinemaRemarkRepository;
 
     @Override
-    @Caching(evict = {
-    @CacheEvict(cacheNames = "cinemaRemark", key = "#p0.getCinemaId()"),
-    @CacheEvict(cacheNames = "cinemaRemark", key = "#p0.getUserId()")
-    })
+//    @Caching(evict = {
+//    @CacheEvict(cacheNames = "cinemaRemark", key = "#p0.getCinemaId()"),
+//    @CacheEvict(cacheNames = "cinemaRemark", key = "#p0.getUserId()")
+//    })
+    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public CinemaRemark save(CinemaRemark cinemaRemark) {
         return cinemaRemarkRepository.save(cinemaRemark);
     }
 
     @Override
-    @Cacheable(cacheNames = "cinemaRemark", key = "#p0", condition = "#result != null and #result.size() > 0")
+//    @Cacheable(cacheNames = "cinemaRemark", key = "#p0", condition = "#result != null and #result.size() > 0")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<CinemaRemark> findByCinemaId(int cinemaId) {
         return cinemaRemarkRepository.findByCinemaId(cinemaId);
     }
 
     @Override
-    @Cacheable(cacheNames = "cinemaRemark", key = "#p0", condition = "#result != null and #result.size() > 0")
+//    @Cacheable(cacheNames = "cinemaRemark", key = "#p0", condition = "#result != null and #result.size() > 0")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<CinemaRemark> findByUserId(int userId) {
         return cinemaRemarkRepository.findByUserId(userId);
     }
 
     @Override
-    @CacheEvict(cacheNames = "cinemaRemark", allEntries = true)
+//    @CacheEvict(cacheNames = "cinemaRemark", allEntries = true)
     public void reload() {
 
     }

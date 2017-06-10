@@ -22,13 +22,14 @@ public class CinemaPicDaoImpl implements CinemaPicDao {
     private CinemaPicRepository cinemaPicRepository;
 
     @Override
-    @Cacheable(cacheNames = "cinemaPic")
+//    @Cacheable(cacheNames = "cinemaPic")
+    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<CinemaPic> getPicByCinemaIdAndType(int cinemaId, int type) {
         return cinemaPicRepository.findByCinemaIdAndType(cinemaId, type);
     }
 
     @Override
-    @CacheEvict(cacheNames = {"cinemaPic"}, allEntries = true)
+//    @CacheEvict(cacheNames = {"cinemaPic"}, allEntries = true)
     public void reload() {
     }
 }
