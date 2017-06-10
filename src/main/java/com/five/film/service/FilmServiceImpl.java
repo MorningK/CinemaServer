@@ -69,7 +69,8 @@ public class FilmServiceImpl implements FilmService {
         List<Integer> filmIds = filmSessionService.findFilmIdByCinemaAndTime(cinemaId, bt, et);
         List<Film> films = new ArrayList<>();
         for (Integer id : filmIds) {
-            films.add(filmDao.findById(id));
+            Film film = filmDao.findById(id);
+            if (film != null) films.add(filmDao.findById(id));
         }
         if (films.size() == 0) {
             return new MyMessage(0, "没有找到电影");

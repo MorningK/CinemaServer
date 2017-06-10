@@ -33,6 +33,8 @@ public class FilmSessionTester {
     @Autowired
     private FilmSessionDao filmSessionDao;
 
+
+
     private Map<Long, List<FilmSession>> filmSessions = new HashMap<>();
     private Map<Long, List<Integer> > films = new HashMap<>();
 
@@ -102,9 +104,6 @@ public class FilmSessionTester {
 
     @Test
     public void getFilmSessionTest() {
-        for (Long id : films.keySet()) {
-            List<FilmSession> expt = filmSessions.get(id);
-            //todo
-        }
+        //this test write in FilmTester
     }
 }

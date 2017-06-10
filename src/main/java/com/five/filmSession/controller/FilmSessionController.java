@@ -18,4 +18,5 @@ public class FilmSessionController {
     public Object getFilmSession(int filmId, int cinemaId, String time) {
         return filmSessionServiceService.getFilmSession(filmId, cinemaId, time);
     }
+
 }

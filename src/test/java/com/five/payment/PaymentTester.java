@@ -116,6 +116,7 @@ public class PaymentTester {
         for (Reservation reservation : reservations) {
             double price = reservation.getPrice();
             double oldbalance = paymentService.findByUserId(reservation.getUserId()).getBalance();
+            Assert.assertEquals(Reservation.NOTPAID, orderService.findById(reservation.getId()).getStatus());
             MyMessage message = (MyMessage) paymentService.payOrder(reservation.getId());
             if (message.getStatus() == 0) {
                 System.out.println(message.getMessage());
@@ -128,7 +129,7 @@ public class PaymentTester {
             }
         }
     }
-    
+
     @Test
     public void updateWallet() {
         for (User user : users) {

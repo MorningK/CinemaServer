@@ -5,6 +5,7 @@ import com.five.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,16 +26,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @CachePut
     public User save(User user) {
         return userRepository.save(user);
     }
 
 
-    /*Todo
-    Sometimes this exception will happen
-    Exception:
-    java.lang.ClassCastException: java.util.ArrayList cannot be cast to com.five.user.model.User
-    * */
     @Override
     public User findById(int id) {
         return userRepository.findById(id);

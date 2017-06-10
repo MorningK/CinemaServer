@@ -89,6 +89,13 @@ public class OrderTester {
             MyMessage message = orderService.makeOrder(reservation.getUserId(), reservation.getFilmSessionId(), reservation.getSitting(), reservation.getPrice());
             Assert.assertEquals(1,message.getStatus());
         }
+        int i = 1;
+        for (Reservation reservation : reservations) {
+            Reservation act = orderService.findById(i);
+            Assert.assertEquals(Reservation.NOTPAID, act.getStatus());
+//            Assert.assertEquals(0,message.getStatus());
+            i++;
+        }
         for (Reservation reservation : reservations) {
             MyMessage message = orderService.makeOrder(reservation.getUserId(), reservation.getFilmSessionId(), reservation.getSitting(), reservation.getPrice());
             Assert.assertEquals(0,message.getStatus());
