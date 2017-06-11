@@ -28,12 +28,13 @@ public class CinemaDaoImpl implements CinemaDao {
     }
 
     @Override
-//    @Caching(put = {
-//    @CachePut(cacheNames = "cinema", key = "#p0.getId()", condition = "#p0 != null"),
-//    }, evict = {
-//    @CacheEvict(cacheNames = "cinema", key = "#result.getCitycode()", condition = "#result != null" )
-//    })
-    @CachePut(keyGenerator = "wiselyKeyGenerator")
+    @Caching(put = {
+    @CachePut(key = "'cinema.findById'+#result.getId()", condition = "#result != null")
+    }, evict = {
+    @CacheEvict(key = "'cinema.findByLocation'+#result.getCitycode()", condition = "#result != null" ),
+    @CacheEvict(key = "'cinema.findIdByCitycode'+#result.getCitycode()", condition = "#result != null" )
+    })
+//    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public Cinema save(Cinema cinema) {
         return cinemaRepository.save(cinema);
     }

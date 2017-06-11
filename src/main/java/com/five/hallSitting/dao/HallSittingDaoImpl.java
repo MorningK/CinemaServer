@@ -28,7 +28,7 @@ public class HallSittingDaoImpl implements HallSittingDao {
 
     @Override
 //    @CachePut(cacheNames = "hallSitting", key = "#result.getId()", condition = "#result != null")
-    @CachePut(keyGenerator = "wiselyKeyGenerator")
+    @CachePut(key = "'hallSitting.findById'+#result.getId()", condition = "#result != null")
     public HallSitting save(HallSitting hallSitting) {
         return hallSittingRepository.save(hallSitting);
     }

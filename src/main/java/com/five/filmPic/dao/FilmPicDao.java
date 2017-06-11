@@ -1,5 +1,6 @@
 package com.five.filmPic.dao;
 
+import com.five.film.model.Film;
 import com.five.filmPic.model.FilmPic;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface FilmPicDao {
     List<FilmPic> findByFilmIdAndType(int filmId, int type);
+    FilmPic save(FilmPic filmPic);
 }

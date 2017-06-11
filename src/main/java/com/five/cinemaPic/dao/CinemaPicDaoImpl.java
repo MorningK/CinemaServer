@@ -32,4 +32,10 @@ public class CinemaPicDaoImpl implements CinemaPicDao {
 //    @CacheEvict(cacheNames = {"cinemaPic"}, allEntries = true)
     public void reload() {
     }
+
+    @Override
+    @CacheEvict(key = "'cinemaPic.getPicByCinemaIdAndType'+#result.getCinemaId()+#reuslt.getType()", condition = "#result != null")
+    public CinemaPic save(CinemaPic cinemaPic) {
+        return cinemaPicRepository.save(cinemaPic);
+    }
 }

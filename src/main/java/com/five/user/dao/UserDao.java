@@ -14,4 +14,5 @@ public interface UserDao {
     void reload();
     public User findbyEmail(String email);
     public User findByCode(String code);
+    void refreshOne(User user);
 }

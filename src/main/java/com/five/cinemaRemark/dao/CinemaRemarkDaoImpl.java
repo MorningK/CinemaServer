@@ -19,11 +19,11 @@ public class CinemaRemarkDaoImpl implements CinemaRemarkDao {
     private CinemaRemarkRepository cinemaRemarkRepository;
 
     @Override
-//    @Caching(evict = {
-//    @CacheEvict(cacheNames = "cinemaRemark", key = "#p0.getCinemaId()"),
-//    @CacheEvict(cacheNames = "cinemaRemark", key = "#p0.getUserId()")
-//    })
-    @CachePut(keyGenerator = "wiselyKeyGenerator")
+    @Caching(evict = {
+    @CacheEvict(key = "'cinemaRemark.findByCinemaId'+#result.getCinemaId()", condition = "#result != null"),
+    @CacheEvict(key = "'cinemaRemark.findByUserId'+#result.getUserId()", condition = "#result != null")
+    })
+//    @CachePut(keyGenerator = "wiselyKeyGenerator")
     public CinemaRemark save(CinemaRemark cinemaRemark) {
         return cinemaRemarkRepository.save(cinemaRemark);
     }

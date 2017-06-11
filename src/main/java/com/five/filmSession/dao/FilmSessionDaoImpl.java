@@ -43,8 +43,15 @@ public class FilmSessionDaoImpl implements FilmSessionDao {
     }
 
     @Override
-//    @CacheEvict(cacheNames = "filmSession", allEntries = true)
-    @CachePut(keyGenerator = "wiselyKeyGenerator")
+    @Caching(put = {
+            @CachePut(key = "'filmSession.findById'+#result.getId()", condition = "#result != null")
+    },evict = {
+            @CacheEvict(key = "'filmSession.findFilmIdByTime'+#p0+#p1", condition = "#result != null"),
+            @CacheEvict(key = "'filmSession.findByFilmAndCinemaAndTime'+#p0+#p1+#p2+#p3", condition = "#result != null"),
+            @CacheEvict(key = "'filmSession.findByCinemaIdAndTime'+#p0+#p1+#p2", condition = "#result != null"),
+//            @CacheEvict(key = "'filmSession.findByCinemasAntTime'+#result.getId()", condition = "#result != null")
+    })
+
     public FilmSession save(FilmSession filmSession) {
         return filmSessionRepository.save(filmSession);
     }
@@ -57,7 +64,7 @@ public class FilmSessionDaoImpl implements FilmSessionDao {
     }
 
     @Override
-    @Cacheable(keyGenerator = "wiselyKeyGenerator")
+//    @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<Integer> findByCinemasAntTime(List<Integer> cinemaId, Timestamp bt, Timestamp et) {
         return filmSessionRepository.findByCinemasAntTime(cinemaId, bt, et);
     }

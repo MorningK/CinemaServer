@@ -65,7 +65,7 @@ public class RedisConfig extends CachingConfigurerSupport {
                 for (Object obj : objects) {
                     sb.append(obj.toString());
                 }
-                System.out.println("keyGenerator=" + sb.toString());
+//                System.out.println("keyGenerator=" + sb.toString());
                 return sb.toString();
             }
         };

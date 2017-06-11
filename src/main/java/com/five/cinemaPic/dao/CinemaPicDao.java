@@ -1,5 +1,6 @@
 package com.five.cinemaPic.dao;
 
+import com.five.cinema.model.Cinema;
 import com.five.cinemaPic.model.CinemaPic;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface CinemaPicDao {
     public List<CinemaPic> getPicByCinemaIdAndType(int cinemaId, int type);
 //    public List<CinemaPic> getInsideByCinemaId(int cinemaId);
     void reload();
+    CinemaPic save(CinemaPic cinemaPic);
 }

@@ -61,6 +61,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Object addWalletForNewUserById(int userId, int balance) {
+        walletDao.refreshOne(userId);
         Wallet wallet = findByUserId(userId);
         if (wallet != null) {
             if (wallet.getUserId() != -1) {

@@ -67,7 +67,7 @@ public class CinemaTester {
 
         if (cinemasWithSameCityCode == null) {
             System.out.println("prepare cwcs");
-            cinemasWithSameCityCode = DataCreator.prepareCinemaWithSameCity(200, 11, 0.5, 0.5);
+            cinemasWithSameCityCode = DataCreator.prepareCinemaWithSameCity(10, 11, 0.5, 0.5);
             for (int i = 0; i < cinemasWithSameCityCode.size(); i++) {
                 cinemaDao.save(cinemasWithSameCityCode.get(i));
             }

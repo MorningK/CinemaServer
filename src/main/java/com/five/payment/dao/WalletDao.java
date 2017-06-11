@@ -13,4 +13,5 @@ public interface WalletDao {
     Wallet UpdateWalletBalanceById(int id, double newBalance);
     Wallet addWalletForNewUserById(int userId, int balance);
     void reload();
+    void refreshOne(int userId);
 }

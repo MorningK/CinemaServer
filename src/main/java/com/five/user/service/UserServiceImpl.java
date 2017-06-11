@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService {
             return new MyMessage(0, "邮箱不能为空");
         }
 //        List<User> usersByUsername = userDao.findByUsername(user.getUsername());
+        userDao.refreshOne(user);
         User userByUsername = userDao.findByUsername(username);
         User userByEmail = userDao.findbyEmail(email);
         if (userByUsername != null) { // 没有找到，可以注册

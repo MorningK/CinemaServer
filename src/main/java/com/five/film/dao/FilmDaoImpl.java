@@ -34,7 +34,7 @@ public class FilmDaoImpl implements FilmDao {
 
     @Override
 //    @CachePut(cacheNames = "film", key = "#result.getId()", condition = "#result != null")
-    @CachePut(keyGenerator = "wiselyKeyGenerator")
+    @CachePut(key = "'film.findById'+#result.getId()", condition = "#result != null")
     public Film save(Film film) {
         return filmRepository.save(film);
     }

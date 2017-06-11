@@ -4,6 +4,7 @@ import com.five.order.model.Reservation;
 import com.five.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,7 @@ public class OrderDaoImpl implements OrderDao {
     private OrderRepository orderRepository;
 
     @Override
-//    @CachePut(cacheNames = "reservation", key = "#result.getId()", condition = "#result != null")
-    @Cacheable(keyGenerator = "wiselyKeyGenerator")
+    @CachePut(key = "'reservation.findById'+#result.getId()", condition = "#result != null")
     public Reservation save(int userId, int filmSessionId, String orderSit, double price) {
         Reservation order = new Reservation(orderSit, price, filmSessionId, userId);
         return orderRepository.save(order);
@@ -28,14 +28,14 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
 //    @CachePut(cacheNames = "reservation", key = "#p0.getId()")
-    @CachePut(keyGenerator = "wiselyKeyGenerator")
+    @CacheEvict(key = "'reservation.findById'+#p0.getId()")
     public void orderOutOfDate(Reservation order) {
         orderRepository.save(order);
     }
 
     @Override
 //    @CachePut(cacheNames = "reservation", key = "#p0")
-    @CachePut(keyGenerator = "wiselyKeyGenerator")
+    @CacheEvict(key = "'reservation.findById'+#p0")
     public int UpdateStatusById(int id, int status) {
         return orderRepository.updateById(id, status);
     }
