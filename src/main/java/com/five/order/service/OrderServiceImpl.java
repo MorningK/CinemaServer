@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         clockThread.setPos(pos);
 
         new Thread(clockThread).start();
-        return new MyMessage(1, "下单成功");
+        return new MyMessage(1, order.getId());
     }
 
     @Override

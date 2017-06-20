@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.five.film.Util.FilmUtil.getTheEndOfDay;
+import static com.five.film.Util.FilmUtil.getTheStartOfDay;
 
 /**
  * Created by msi on 2017/6/6.
@@ -28,7 +29,7 @@ public class FilmSessionServiceImpl implements FilmSessionService {
         Timestamp bt = Timestamp.valueOf(time);
         Date d = bt;
         Timestamp et= getTheEndOfDay(d);
-        List<FilmSession> filmsessions = filmSessionDao.findByFilmAndCinemaAndTime(filmId, cinemaId, bt, et);
+        List<FilmSession> filmsessions = filmSessionDao.findByFilmAndCinemaAndTime(filmId, cinemaId, getTheStartOfDay(d), et);
         if (filmsessions == null || filmsessions.size() == 0) {
             return new MyMessage(0, "没有找到场次");
         } else {

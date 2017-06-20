@@ -59,7 +59,7 @@ public class CinemaTester {
         * */
         if (cinemas == null) {
             System.out.println("prepare cinemas");
-            cinemas = DataCreator.prepareCinema(10);
+            cinemas = DataCreator.prepareCinema(5);
             for (int i = 0; i < cinemas.size(); i++) {
                 cinemaDao.save(cinemas.get(i));
             }
@@ -91,6 +91,7 @@ public class CinemaTester {
     public void queryByIdTest() throws Exception {
         for (int i = 0; i < cinemas.size(); i++) {
             Cinema actual = cinemas.get(i);
+            System.out.println("query no sql");
             Cinema expe = cinemaService.findById(actual.getId());
             Assert.assertArrayEquals(cinemaToArray(expe), cinemaToArray(actual));
         }

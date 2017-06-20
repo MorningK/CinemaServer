@@ -13,6 +13,8 @@ import com.five.film.repository.FilmRepository;
 import com.five.film.service.FilmService;
 import com.five.filmSession.dao.FilmSessionDao;
 import com.five.filmSession.model.FilmSession;
+import com.five.hallSitting.dao.HallSittingDao;
+import com.five.hallSitting.model.HallSitting;
 import com.five.user.model.MyMessage;
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,8 +51,12 @@ public class FilmTester {
     @Autowired
     private FilmSessionDao filmSessionDao;
 
+    @Autowired
+    private HallSittingDao hallSittingDao;
+
     private List<Film> films = new ArrayList<Film>();
     private List<FilmSession> filmSessions = new ArrayList<>();
+    private List<HallSitting> hallSittings = new ArrayList<>();
     private List<Cinema> cinemas = new ArrayList<>();
     private Map<Integer, Integer> exptFilms = new HashMap<>();
     private Map<Integer, List<Film>> divideByCitycode = new HashMap<>();
@@ -113,6 +119,11 @@ public class FilmTester {
                 }
             }
 
+        }
+
+        hallSittings = DataCreator.prepareHallSitting(25, 10,10);
+        for (HallSitting hallSitting : hallSittings) {
+            hallSittingDao.save(hallSitting);
         }
 //        filmService.reload();
     }

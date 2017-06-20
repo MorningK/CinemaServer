@@ -41,7 +41,7 @@ public class DataCreator {
             String phone = Integer.toString(i);
             double lo = random.nextDouble();
             double la = random.nextDouble();
-            int cityCode = random.nextInt(n);
+            int cityCode = random.nextInt(n)+1;
             Cinema cinema = new Cinema(name, address,phone, lo, la, cityCode);
             ans.add(cinema);
         }
