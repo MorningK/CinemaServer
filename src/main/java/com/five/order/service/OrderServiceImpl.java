@@ -34,6 +34,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public MyMessage makeOrder(int userId, int filmSessionId, String orderSit, double price) {
+        if (orderSit.equals("[]")) {
+            return new MyMessage(0, "请选择座位");
+        }
+
         User user = userService.findById(userId);
         if (user == null) {
             return new MyMessage(0, "用户不存在");
@@ -65,12 +69,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int UpdateStatusById(int id, int status) {
-        return orderDao.UpdateStatusById(id, status);
+        return orderDao.UpdateStatusById(findById(id), status);
     }
 
     @Override
     public Reservation findById(int id) {
         return orderDao.findById(id);
+    }
+
+    @Override
+    public MyMessage findOrderByUserId(int userId) {
+        Reservation[] reservation = orderDao.findByUserId(userId);
+        return new MyMessage(1, reservation);
     }
 
 

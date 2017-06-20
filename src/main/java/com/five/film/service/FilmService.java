@@ -9,8 +9,8 @@ import java.sql.Timestamp;
  * Created by msi on 2017/6/6.
  */
 public interface FilmService {
-    Object getFilm(int citycode);
+    MyMessage getFilm(int citycode);
     Film findById(int id);
     void reload();
-    Object getFilmByCinema(int cinemaId);
+    MyMessage getFilmByCinema(int cinemaId);
 }

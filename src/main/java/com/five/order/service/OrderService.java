@@ -12,4 +12,6 @@ public interface OrderService {
 
     int UpdateStatusById(int id, int status);
     Reservation findById(int id);
+
+    MyMessage findOrderByUserId(int userId);
 }

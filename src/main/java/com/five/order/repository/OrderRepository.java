@@ -19,6 +19,5 @@ public interface OrderRepository extends JpaRepository<Reservation, Integer> {
     @Query(value="update Reservation r set r.status=:newStatus where r.id=:rid")
     int updateById(@Param("rid") int id, @Param("newStatus") int newStatus);
 
-//    @Cacheable
-    Reservation findOne(Integer id);
+    Reservation[] findByUserId(int userId);
 }

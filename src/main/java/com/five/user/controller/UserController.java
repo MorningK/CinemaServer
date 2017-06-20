@@ -40,4 +40,13 @@ public class UserController {
         return "激活失败";
     }
 
+    @RequestMapping(value="/user/findUser", method = RequestMethod.GET)
+    public MyMessage findUser(int userId) {
+        User user = userService.findById(userId);
+        if (user == null) {
+            return new MyMessage(0, "用户不存在");
+        }
+        return new MyMessage(1, user);
+    }
+
 }

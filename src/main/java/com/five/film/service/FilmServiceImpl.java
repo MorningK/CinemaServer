@@ -34,7 +34,7 @@ public class FilmServiceImpl implements FilmService {
     private FilmDao filmDao;
 
     @Override
-    public Object getFilm(int citycode) {
+    public MyMessage getFilm(int citycode) {
         List<Integer> cids = cinemaService.findIdByCitycode(citycode);
         Date d = new Date();
         Timestamp bt = getTheStartOfDay(d);
@@ -62,7 +62,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public Object getFilmByCinema(int cinemaId) {
+    public MyMessage getFilmByCinema(int cinemaId) {
         Date d = new Date();
         Timestamp bt = getTheStartOfDay(d);
         Timestamp et = getTheEndOfDay(d);

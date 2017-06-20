@@ -11,6 +11,7 @@ public interface OrderDao {
     Reservation save(int userId, int filmSessionId, String orderSit, double price);
     public void orderOutOfDate(Reservation order);
 
-    int UpdateStatusById(int id, int status);
+    int UpdateStatusById(Reservation reservation, int status);
     Reservation findById(int id);
+    Reservation[] findByUserId(int userId);
 }

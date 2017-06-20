@@ -49,8 +49,9 @@ public class FilmRemarkServiceImpl implements FilmRemarkService{
         Film film = filmService.findById(filmId);
         if (film == null) return new MyMessage(0, "电影不存在");
         List<FilmRemark> filmRemarks = filmRemarkDao.findByFilmId(filmId);
-        if (filmRemarks == null||filmRemarks.size() == 0) return new MyMessage(0, "无评论");
-        return new MyMessage(1,filmRemarks);
+        if (filmRemarks == null || filmRemarks.size() == 0) return new MyMessage(0, "无评论");
+
+        return new MyMessage(1, filmRemarks);
     }
 
     @Override
@@ -60,6 +61,6 @@ public class FilmRemarkServiceImpl implements FilmRemarkService{
 
         List<FilmRemark> filmRemarks = filmRemarkDao.findByUserId(userId);
         if (filmRemarks == null||filmRemarks.size() == 0) return new MyMessage(0, "无评论");
-        return new MyMessage(1,filmRemarks);
+        return new MyMessage(1, filmRemarks);
     }
 }

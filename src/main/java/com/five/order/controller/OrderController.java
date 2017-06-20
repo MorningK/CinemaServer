@@ -21,7 +21,7 @@ public class OrderController {
     private OrderService orderService;
 
     @RequestMapping(value = "/make", method = RequestMethod.POST)
-    public MyMessage getCurrentSit(HttpSession session, int filmSessionId, String orderSit, double price) {
+    public MyMessage makeReservation(HttpSession session, int filmSessionId, String orderSit, double price) {
         Object userIdObj = session.getAttribute("userId");
         if (userIdObj == null) {
             return new MyMessage(0, "请登录");
@@ -31,11 +31,16 @@ public class OrderController {
         return messaage;
     }
 
-//    @PostMapping("/make")
-//    public MyMessage getCurrentSit(int userId, int filmSessionId, String orderSit, double price) {
-//        MyMessage messaage = orderService.makeOrder(userId, filmSessionId, orderSit, price);
-//        return messaage;
-//    }
+    @RequestMapping(value = "/getMyOrder", method = RequestMethod.GET)
+    public MyMessage getMyOrder(HttpSession session) {
+        Object userIdObj = session.getAttribute("userId");
+        if (userIdObj == null) {
+            return new MyMessage(0, "请登录");
+        }
+        int userId = (int)userIdObj;
+        MyMessage message = orderService.findOrderByUserId(userId);
+        return message;
+    }
 
 
 }
