@@ -1,5 +1,8 @@
 package com.five.cinema.model;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,15 +10,20 @@ import java.io.Serializable;
  * Created by msi on 2017/6/6.
  */
 @Entity
+@Indexed
 public class Cinema implements Serializable {
 
     @Id
     @GeneratedValue
     private int id;
+
+    @Field
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
+    @Field
     private String address;
+
     @Column(nullable = false)
     private String phone;
     @Column(nullable = false)

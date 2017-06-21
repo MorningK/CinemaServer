@@ -1,10 +1,6 @@
 package com.five.film.model;
-
-//import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
-//import org.hibernate.search.annotations.Analyzer;
-//import org.hibernate.search.annotations.DocumentId;
-//import org.hibernate.search.annotations.Field;
-//import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,21 +18,18 @@ import java.util.Date;
  */
 
 @Entity
-//@Indexed
-//@Analyzer(impl = SmartChineseAnalyzer.class)
+@Indexed
 public class Film implements Serializable {
 
     @Id
     @GeneratedValue
-//    @DocumentId
     private int id;
 
+    @Field
     @Column(nullable = false)
-//    @Field
     private String name;
 
     @Column(nullable = false)
-//    @Field
     private String summary;
 
     @Column(nullable = false)
@@ -55,15 +48,12 @@ public class Film implements Serializable {
     private double lastTime;
 
     @Column(nullable = false)
-//    @Field
     private String actor;
 
     @Column(nullable = false)
-//    @Field
     private String director;
 
     @Column(nullable = false)
-//    @Field
     private String language;
 
     public Film() {}
