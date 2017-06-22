@@ -46,7 +46,7 @@ public class UserController {
         if (user == null) {
             return new MyMessage(0, "用户不存在");
         }
-        return new MyMessage(1, user);
+        return new MyMessage(1, user.getUsername());
     }
 
 }

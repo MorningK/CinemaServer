@@ -16,10 +16,11 @@ import java.util.List;
 //@CacheConfig(cacheNames = "cinema")
 public interface CinemaRepository extends JpaRepository<Cinema, Integer> {
 //    @Cacheable
-    List<Cinema> findByCitycode(int citycode);
+    @Query("select c from Cinema c where c.citycode>=:cd and c.citycode<=:cu")
+    List<Cinema> findByCitycode(@Param("cd") int cd, @Param("cu") int cu);
 //    @Cacheable
     Cinema findOne(Integer id);
 
-    @Query("select c.id from Cinema c where c.citycode=:cc")
-    List<Integer> findIdByCitycode(@Param("cc") int citycode);
+    @Query("select c.id from Cinema c where c.citycode>=:cd and c.citycode<=:cu")
+    List<Integer> findIdByCitycode(@Param("cd") int cd, @Param("cu") int cu);
 }

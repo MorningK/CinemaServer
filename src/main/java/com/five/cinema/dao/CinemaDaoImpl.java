@@ -24,7 +24,7 @@ public class CinemaDaoImpl implements CinemaDao {
 //    @Cacheable(cacheNames = "cinema", key = "#p0", condition = "#result != null and #result.size() > 0")
     @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<Cinema> findByLocation(int citycode) {
-        return cinemaRepository.findByCitycode(citycode);
+        return cinemaRepository.findByCitycode(citycode, citycode + 99);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class CinemaDaoImpl implements CinemaDao {
     @Override
     @Cacheable(keyGenerator = "wiselyKeyGenerator")
     public List<Integer> findIdByCitycode(int citycode) {
-        return cinemaRepository.findIdByCitycode(citycode);
+        return cinemaRepository.findIdByCitycode(citycode, citycode + 99);
     }
 
 }

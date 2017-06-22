@@ -26,7 +26,8 @@ public class CinemaServieceImpl implements CinemaService  {
 
     @Override
     public Object getCinemas(int citycode, double longtitude, double latitude, int currentpage) {
-        List<Cinema> cinemas = cinemaDao.findByLocation(citycode);
+        int city = citycode / 100 * 100;
+        List<Cinema> cinemas = cinemaDao.findByLocation(city);
         if (cinemas == null) return new MyMessage(0, "没有找到电影院");
         Collections.sort(cinemas, new CompareLocation(longtitude, latitude));
         int endpos = (currentpage+1)*10;
@@ -51,7 +52,8 @@ public class CinemaServieceImpl implements CinemaService  {
 
     @Override
     public List<Integer> findIdByCitycode(int citycode) {
-        return cinemaDao.findIdByCitycode(citycode);
+        int city = citycode / 100 * 100;
+        return cinemaDao.findIdByCitycode(city);
     }
 
     private final class CompareLocation implements Comparator<Cinema> {
