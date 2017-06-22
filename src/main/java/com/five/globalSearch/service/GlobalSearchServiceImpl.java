@@ -19,10 +19,21 @@ public class GlobalSearchServiceImpl implements GlobalSearchService {
     public MyMessage search(String text) {
         List list1 = globalSearchdDao.cinemaSearch(text);
         List list2 = globalSearchdDao.filmSearch(text);
-        for (int i = 0; i < list2.size(); i++) {
-            list1.add(list2.get(i));
+        if (list1 == null || list1.isEmpty()) {
+            if (list2 == null) {
+                return new MyMessage(0, "查询得到0条信息");
+            } else {
+                return new MyMessage(1, list2);
+            }
+        } else {
+            if (list2 != null) {
+                for (int i = 0; i < list2.size(); i++) {
+                    list1.add(list2.get(i));
+                }
+
+            }
+            return new MyMessage(1, list1);
         }
-        return new MyMessage(1, list1);
     }
 
 }

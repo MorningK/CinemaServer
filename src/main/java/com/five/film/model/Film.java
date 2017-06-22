@@ -1,4 +1,7 @@
 package com.five.film.model;
+import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -19,9 +22,11 @@ import java.util.Date;
 
 @Entity
 @Indexed
+@Analyzer(impl = SmartChineseAnalyzer.class)
 public class Film implements Serializable {
 
     @Id
+    @DocumentId
     @GeneratedValue
     private int id;
 

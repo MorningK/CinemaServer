@@ -41,10 +41,15 @@ public class HallSittingTester {
 
     @Before
     public void prepareData() {
-        hallSittings = DataCreator.prepareHallSitting(10, 5, 5);
+        hallSittings = DataCreator.prepareHallSitting(10000, 7, 8);
         for (HallSitting hallSitting : hallSittings) {
             hallSittingDao.save(hallSitting);
         }
+
+    }
+
+    @Test
+    public void nothing() {
 
     }
 

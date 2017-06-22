@@ -54,23 +54,23 @@ public class FilmSessionTester {
 
     @Before
     public void prepareFilmSession() {
-        List<FilmSession> tfilmSessions = DataCreator.prepareFilmSession(25, 5, 10);
+        List<FilmSession> tfilmSessions = DataCreator.prepareFilmSession(10000, 100, 95);
         for (FilmSession filmSession : tfilmSessions) {
             filmSessionDao.save(filmSession);
-            Timestamp today = FilmUtil.getTheStartOfDay(new Date(filmSession.getBeginTime().getTime()));
-            if (filmSessions.get(today.getTime()) == null) {
-                List<FilmSession> fff = new ArrayList<FilmSession>();
-                fff.add(filmSession);
-                filmSessions.put(today.getTime(), fff);
-            } else filmSessions.get(today.getTime()).add(filmSession);
-
-            if (films.get(today.getTime()) == null) {
-                List<Integer> ttt = new ArrayList<>();
-                ttt.add(filmSession.getFilmId());
-                films.put(today.getTime(), ttt);
-            } else if (!(films.get(today.getTime()).contains(filmSession.getFilmId()))) {
-                films.get(today.getTime()).add(filmSession.getFilmId());
-            }
+//            Timestamp today = FilmUtil.getTheStartOfDay(new Date(filmSession.getBeginTime().getTime()));
+//            if (filmSessions.get(today.getTime()) == null) {
+//                List<FilmSession> fff = new ArrayList<FilmSession>();
+//                fff.add(filmSession);
+//                filmSessions.put(today.getTime(), fff);
+//            } else filmSessions.get(today.getTime()).add(filmSession);
+//
+//            if (films.get(today.getTime()) == null) {
+//                List<Integer> ttt = new ArrayList<>();
+//                ttt.add(filmSession.getFilmId());
+//                films.put(today.getTime(), ttt);
+//            } else if (!(films.get(today.getTime()).contains(filmSession.getFilmId()))) {
+//                films.get(today.getTime()).add(filmSession.getFilmId());
+//            }
         }
     }
 
