@@ -1,11 +1,12 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
+    #mysql configuration
     url: jdbc:mysql://localhost:3306/cinema?verifyServerCertificate=false&useSSL=false&requireSSL=false
-    username: root
-    password: root
-#    username: tester
-#    password: 123456789
+#    username: root
+#    password: root
+    username: tester
+    password: 123456789
   jpa:
     hibernate:
         ddl-auto: update
@@ -18,6 +19,7 @@ spring:
             indexBase: index
   application:
     name: cinema
+  #redis configuration
   redis:
     host: localhost
     port: 6379
@@ -28,5 +30,7 @@ spring:
       max-wait: -1
 #    password: root
 
+#server run on this address and this port
 server:
-  port: 8080
+  port: 8000
+  address: 172.18.69.88

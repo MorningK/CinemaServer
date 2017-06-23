@@ -20,9 +20,9 @@ public class MyTest {
 
     @Test
     public void LocalIpTest() throws Exception {
-        String ip = LocalIp.getLocalIp();
-        System.out.println(ip);
-        System.out.println(ip.length());
-        System.out.println(ip);
+//        String ip = LocalIp.getLocalIp();
+//        System.out.println(ip);
+//        System.out.println(ip.length());
+//        System.out.println(ip);
     }
 }

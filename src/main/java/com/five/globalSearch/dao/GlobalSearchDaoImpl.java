@@ -2,6 +2,8 @@ package com.five.globalSearch.dao;
 
 import com.five.cinema.model.Cinema;
 import com.five.film.model.Film;
+import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;

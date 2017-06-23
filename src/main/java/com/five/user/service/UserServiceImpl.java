@@ -33,6 +33,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PaymentService paymentService;
 
+    @Autowired
+    private LocalIp localIp;
+
     private MailThreadPool mailThreadPool = MailThreadPool.getInstance();
 
     public MyMessage doRegister(User user) {
@@ -63,8 +66,8 @@ public class UserServiceImpl implements UserService {
         String content = "";
         try {
             content = "<html><head></head><body><h1>请点击连接激活</h1><h3><a href='http://"
-                    + LocalIp.getLocalIp() + ":8080/active?code="
-                    + code + "'>http:// + " + LocalIp.getLocalIp() + ":8080/active?code=" + code + "</href></h3></body></html>";
+                    + localIp.getLocalIp() + "/active?code="
+                    + code + "'>http://" + localIp.getLocalIp() + "/active?code=" + code + "</href></h3></body></html>";
 
         } catch (Exception e) {
             e.printStackTrace();
