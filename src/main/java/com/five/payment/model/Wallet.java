@@ -19,7 +19,7 @@ public class Wallet implements Serializable {
     @Column(nullable = false)
     private double balance;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int userId;
 
     public Wallet() {}

@@ -25,10 +25,13 @@ public class PaymentServiceImpl implements PaymentService {
     private OrderService orderService;
 
     @Override
-    public Object payOrder(int orderId) {
+    public Object payOrder(int userId, int orderId) {
         ClockThread clockThread = ClockThreadPool.getInstance().get(orderId);
         if (clockThread == null) return new MyMessage(0, "订单已过期");
         Reservation reservation = orderService.findById(orderId);
+        if (reservation.getUserId() != userId) {
+            return new MyMessage(0,"你不是此订单持有者");
+        }
         Wallet wallet = walletDao.findWalletByUserId(reservation.getUserId());
         if (wallet == null) {
             return new MyMessage(0, "支付失败，数据库无记录");

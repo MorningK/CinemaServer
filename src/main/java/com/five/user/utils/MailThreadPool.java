@@ -24,16 +24,16 @@ public class MailThreadPool {
 
     public MailThreadPool() {}
 
-    public synchronized int createThread(String email, String code) {
+    public synchronized int createThread(String email, String subject, String content) {
         if (!hasEmpty()) {
-            MailUtil newOne = new MailUtil(email, code);
+            MailUtil newOne = new MailUtil(email, subject, content);
             threadPoolList.add(newOne);
             inUse.add(true);
             return threadPoolList.size() - 1;
         } else {
             int emptyPos = getEmptyPos();
             MailUtil oldGetNew = threadPoolList.get(emptyPos);
-            oldGetNew.init(email, code);
+            oldGetNew.init(email, subject, content);
             inUse.remove(emptyPos);
             inUse.add(emptyPos, true);
             return emptyPos;

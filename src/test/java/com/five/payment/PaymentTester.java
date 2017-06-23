@@ -117,7 +117,7 @@ public class PaymentTester {
             double price = reservation.getPrice();
             double oldbalance = paymentService.findByUserId(reservation.getUserId()).getBalance();
             Assert.assertEquals(Reservation.NOTPAID, orderService.findById(reservation.getId()).getStatus());
-            MyMessage message = (MyMessage) paymentService.payOrder(reservation.getId());
+            MyMessage message = (MyMessage) paymentService.payOrder(reservation.getUserId(), reservation.getId());
             if (message.getStatus() == 0) {
                 System.out.println(message.getMessage());
             } else {

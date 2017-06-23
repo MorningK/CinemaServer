@@ -7,7 +7,7 @@ import com.five.user.model.MyMessage;
  * Created by msi on 2017/6/6.
  */
 public interface PaymentService {
-    Object payOrder(int orderId);
+    Object payOrder(int userId, int orderId);
 
     //Param:
     // balance : money

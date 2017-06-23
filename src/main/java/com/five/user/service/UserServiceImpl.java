@@ -5,15 +5,20 @@ import com.five.payment.service.PaymentService;
 import com.five.user.dao.UserDao;
 import com.five.user.model.MyMessage;
 import com.five.user.model.User;
-import com.five.user.utils.CodeUtil;
-import com.five.user.utils.MailThreadPool;
-import com.five.user.utils.MailUtil;
+import com.five.user.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import static com.five.user.utils.CodeUtil.codeMap;
+import static com.five.user.utils.CodeUtil.generateRandomSixCode;
+import static com.five.user.utils.CodeUtil.secondCode;
 
 /**
  * Created by haoye on 17-6-6.
@@ -55,7 +60,16 @@ public class UserServiceImpl implements UserService {
         }
 
         String code = CodeUtil.generateUniqueCode();
-        int pos = mailThreadPool.createThread(email, code);
+        String content = "";
+        try {
+            content = "<html><head></head><body><h1>请点击连接激活</h1><h3><a href='http://"
+                    + LocalIp.getLocalIp() + ":8080/active?code="
+                    + code + "'>http:// + " + LocalIp.getLocalIp() + ":8080/active?code=" + code + "</href></h3></body></html>";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int pos = mailThreadPool.createThread(email, "Five电影售票激活邮件", content);
         MailUtil mailUtil = mailThreadPool.getThread(pos);
         new Thread(mailUtil).start();
         user.setCode(code);
@@ -112,5 +126,84 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public MyMessage changePassword(int userId, String oldPass, String newPass) {
+        User user = userDao.findById(userId);
+        if (user == null) {
+            return new MyMessage(0, "无此用户");
+        }
+        if (!user.getPassword().equals(oldPass)) {
+            return new MyMessage(0, "密码错误");
+        }
+        user.setPassword(newPass);
+        userDao.save(user);
+        return new MyMessage(1, "修改成功");
+    }
+
+    @Override
+    public MyMessage forgetPassword(String username) {
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            return new MyMessage(0, "无此用户");
+        }
+        if (!user.isState()) {
+            return new MyMessage(0,"用户未激活");
+        }
+        String randomCode = "";
+        if (CodeUtil.codeMap.containsKey(user.getUsername())) {
+            randomCode = CodeUtil.codeMap.get(user.getUsername());
+        } else {
+            randomCode = generateRandomSixCode();
+            CodeUtil.codeMap.put(user.getUsername(), randomCode);
+            ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+            service.schedule(new CodeThread(user.getUsername()), 3, TimeUnit.MINUTES);
+        }
+        String content = "Welcom to use our service.\n Your code is " + randomCode + ".\n有效时间：3分钟。\n请尽快使用。";
+        String subject = "Five电影售票验证码";
+        int pos = mailThreadPool.createThread(user.getEmail(), subject, content);
+        MailUtil mailUtil = mailThreadPool.getThread(pos);
+        new Thread(mailUtil).start();
+
+        return new MyMessage(1, "验证码已发送到邮箱");
+    }
+
+    @Override
+    public MyMessage confirmCode(String username, String code) {
+        if (CodeUtil.codeMap.containsKey(username)) {
+            String actualCode = codeMap.get(username);
+            if (actualCode.equals(code)) {
+                String newCode = "";
+                if (secondCode.containsKey(username)) {
+                    newCode = secondCode.get(username);
+                } else {
+                    newCode = generateRandomSixCode();
+                    secondCode.put(username, newCode);
+                }
+                return new MyMessage(1, newCode);
+            } else {
+                return new MyMessage(0,"验证码不正确");
+            }
+        } else {
+            return new MyMessage(0,"此用户没有申请忘记密码");
+        }
+    }
+
+    @Override
+    public MyMessage resetPassword(String username, String password, String code) {
+        if (secondCode.containsKey(username)) {
+            if (secondCode.get(username).equals(code)) {
+                User user = userDao.findByUsername(username);
+                user.setPassword(password);
+                userDao.save(user);
+                return new MyMessage(1,"密码修改成功");
+            } else {
+                return new MyMessage(0,"次级验证码验证失败");
+            }
+        } else {
+            return new MyMessage(0, "用户未验证成功");
+        }
+    }
+
 
 }

@@ -49,4 +49,29 @@ public class UserController {
         return new MyMessage(1, user.getUsername());
     }
 
+
+    @RequestMapping(value="/user/changePassword", method = RequestMethod.POST)
+    public MyMessage changePassword(HttpSession session, String oldPass, String newPass) {
+        Object userIdObj = session.getAttribute("userId");
+        if (userIdObj == null) {
+            return new MyMessage(0, "请登录");
+        }
+        int userId = (int)userIdObj;
+        return userService.changePassword(userId, oldPass, newPass);
+    }
+
+    @RequestMapping(value="/user/forgetPassword", method = RequestMethod.POST)
+    public MyMessage forgetPassword(String username) {
+        return userService.forgetPassword(username);
+    }
+
+    @RequestMapping(value="/user/confirmCode", method = RequestMethod.POST)
+    public MyMessage confirmCode(String username, String code) {
+        return userService.confirmCode(username, code);
+    }
+
+    @RequestMapping(value="/user/resetPassword", method = RequestMethod.POST)
+    public MyMessage resetPassword(String username, String password, String code) {
+        return userService.resetPassword(username, password, code);
+    }
 }

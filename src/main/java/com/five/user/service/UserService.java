@@ -15,4 +15,8 @@ public interface UserService {
     public User findByUsername(String username);
     void reload();
     public boolean active(String code);
+    public MyMessage changePassword(int userId, String oldPass, String newPass);
+    public MyMessage forgetPassword(String username);
+    public MyMessage confirmCode(String username, String code);
+    public MyMessage resetPassword(String username, String password, String code);
 }

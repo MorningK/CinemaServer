@@ -17,16 +17,20 @@ import com.sun.mail.util.MailSSLSocketFactory;
  */
 public class MailUtil implements Runnable {
     private String email;
-    private String code; // 激活码
+    private String subject;
+    private String content;
+//    private String code; // 激活码
 
-    public MailUtil(String email, String code) {
+    public MailUtil(String email, String subject, String content) {
         this.email = email;
-        this.code = code;
+        this.subject = subject;
+        this.content = content;
     }
 
-    public void init(String email, String code) {
+    public void init(String email, String subject, String content) {
         this.email = email;
-        this.code = code;
+        this.subject = subject;
+        this.content = content;
     }
 
     public void run() {
@@ -65,10 +69,7 @@ public class MailUtil implements Runnable {
             // 邮件接受者
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             // 邮件主题
-            message.setSubject("Five电影售票激活邮件");
-            String content = "<html><head></head><body><h1>请点击连接激活</h1><h3><a href='http://"
-                    + LocalIp.getLocalIp() + ":8080/active?code="
-                    + code + "'>http:// + " + LocalIp.getLocalIp() + ":8080/active?code=" + code + "</href></h3></body></html>";
+            message.setSubject(subject);
             message.setContent(content, "text/html;charset=UTF-8");
             // Transport.send(message);
             // 邮件发送
