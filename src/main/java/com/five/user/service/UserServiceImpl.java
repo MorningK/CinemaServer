@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
     private PaymentService paymentService;
 
     @Autowired
-    private LocalIp localIp;
+    private ServerIp serverIp;
 
     private MailThreadPool mailThreadPool = MailThreadPool.getInstance();
 
@@ -66,8 +65,8 @@ public class UserServiceImpl implements UserService {
         String content = "";
         try {
             content = "<html><head></head><body><h1>请点击连接激活</h1><h3><a href='http://"
-                    + localIp.getLocalIp() + "/active?code="
-                    + code + "'>http://" + localIp.getLocalIp() + "/active?code=" + code + "</href></h3></body></html>";
+                    + serverIp.getLocalIp() + "/active?code="
+                    + code + "'>http://" + serverIp.getLocalIp() + "/active?code=" + code + "</href></h3></body></html>";
 
         } catch (Exception e) {
             e.printStackTrace();

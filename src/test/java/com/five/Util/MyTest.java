@@ -1,7 +1,6 @@
 package com.five.Util;
 
 import com.five.CinemaApplication;
-import com.five.user.utils.LocalIp;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;

@@ -33,4 +33,6 @@ spring:
 #server run on this address and this port
 server:
   port: 8000
-  address: 172.18.69.249
+
+serverAddress: 172.18.69.249
+serverPort: 8080
