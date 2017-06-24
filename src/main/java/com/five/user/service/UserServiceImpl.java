@@ -27,6 +27,8 @@ import static com.five.user.utils.CodeUtil.secondCode;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final String serverIp = "172.18.69.249";
+
     @Autowired
     private UserDao userDao;
 
@@ -66,8 +68,8 @@ public class UserServiceImpl implements UserService {
         String content = "";
         try {
             content = "<html><head></head><body><h1>请点击连接激活</h1><h3><a href='http://"
-                    + localIp.getLocalIp() + "/active?code="
-                    + code + "'>http://" + localIp.getLocalIp() + "/active?code=" + code + "</href></h3></body></html>";
+                    + serverIp + "/active?code="
+                    + code + "'>http://" + serverIp + "/active?code=" + code + "</href></h3></body></html>";
 
         } catch (Exception e) {
             e.printStackTrace();

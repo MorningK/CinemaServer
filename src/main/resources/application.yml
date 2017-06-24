@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     #mysql configuration
-    url: jdbc:mysql://localhost:3306/cinema?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    url: jdbc:mysql://172.18.69.88:3306/cinema?verifyServerCertificate=false&useSSL=false&requireSSL=false
 #    username: root
 #    password: root
     username: tester
@@ -21,7 +21,7 @@ spring:
     name: cinema
   #redis configuration
   redis:
-    host: localhost
+    host: 172.18.69.88
     port: 6379
     pool:
       max-idle: 8
@@ -33,4 +33,4 @@ spring:
 #server run on this address and this port
 server:
   port: 8000
-  address: 172.18.69.88
+#  address: 172.18.69.88
