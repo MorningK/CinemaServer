@@ -14,4 +14,6 @@ public interface OrderService {
     Reservation findById(int id);
 
     MyMessage findOrderByUserId(int userId);
+
+    public void orderPaid(Reservation order);
 }

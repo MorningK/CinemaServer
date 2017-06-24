@@ -32,7 +32,7 @@ public class OrderDaoImpl implements OrderDao {
             @CacheEvict(key = "'reservation.findById'+#p0.getId()"),
             @CacheEvict(key = "'reservation.findByUserId'+#p0.getUserId()")
     })
-    public void orderOutOfDate(Reservation order) {
+    public void updateReservation(Reservation order) {
         orderRepository.save(order);
     }
 

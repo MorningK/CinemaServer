@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface OrderDao {
     Reservation save(int userId, int filmSessionId, String orderSit, double price);
-    public void orderOutOfDate(Reservation order);
+    public void updateReservation(Reservation order);
 
     int UpdateStatusById(Reservation reservation, int status);
     Reservation findById(int id);

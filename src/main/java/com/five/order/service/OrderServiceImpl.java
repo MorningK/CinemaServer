@@ -64,7 +64,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void orderOutOfDate(Reservation order) {
         order.setStatus(Reservation.OUTOFDATE);
-        orderDao.orderOutOfDate(order);
+        orderDao.updateReservation(order);
+    }
+
+    @Override
+    public void orderPaid(Reservation order) {
+        order.setStatus(Reservation.PAID);
+        orderDao.updateReservation(order);
     }
 
     @Override

@@ -26,9 +26,10 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Object payOrder(int userId, int orderId) {
-        ClockThread clockThread = ClockThreadPool.getInstance().get(orderId);
-        if (clockThread == null) return new MyMessage(0, "订单已过期");
         Reservation reservation = orderService.findById(orderId);
+        if (reservation.getStatus() == Reservation.OUTOFDATE) {
+            return new MyMessage(0, "订单已过期");
+        }
         if (reservation.getUserId() != userId) {
             return new MyMessage(0,"你不是此订单持有者");
         }
@@ -46,7 +47,7 @@ public class PaymentServiceImpl implements PaymentService {
                 int result = orderService.UpdateStatusById(orderId, Reservation.PAID);
                 System.out.println(result);
                 if (result > 0) {
-                    clockThread.paid();
+                    orderService.orderPaid(reservation);
                     return new MyMessage(1, "支付成功");
                 } else {
                     return new MyMessage(0, "订单状态修改失败");
