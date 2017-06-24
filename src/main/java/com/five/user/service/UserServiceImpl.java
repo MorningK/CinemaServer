@@ -153,13 +153,14 @@ public class UserServiceImpl implements UserService {
             return new MyMessage(0,"用户未激活");
         }
         String randomCode = "";
-        if (CodeUtil.codeMap.containsKey(user.getUsername())) {
-            randomCode = CodeUtil.codeMap.get(user.getUsername());
+        if (user.getFirstCode() != null) {
+            randomCode = user.getFirstCode();
         } else {
             randomCode = generateRandomSixCode();
-            CodeUtil.codeMap.put(user.getUsername(), randomCode);
+            user.setFirstCode(randomCode);
+            userDao.save(user);
             ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-            service.schedule(new CodeThread(user.getUsername()), 3, TimeUnit.MINUTES);
+            service.schedule(new CodeThread(user.getUsername(), this), 3, TimeUnit.MINUTES);
         }
         String content = "Welcom to use our service.\n Your code is " + randomCode + ".\n有效时间：3分钟。\n请尽快使用。";
         String subject = "Five电影售票验证码";
@@ -172,38 +173,65 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public MyMessage confirmCode(String username, String code) {
-        if (CodeUtil.codeMap.containsKey(username)) {
-            String actualCode = codeMap.get(username);
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            return new MyMessage(0, "无此用户");
+        }
+        if (!user.isState()) {
+            return new MyMessage(0,"用户未激活");
+        }
+
+        if (user.getFirstCode() != null) {
+            String actualCode = user.getFirstCode();
             if (actualCode.equals(code)) {
                 String newCode = "";
-                if (secondCode.containsKey(username)) {
-                    newCode = secondCode.get(username);
+                if (user.getSecondCode() != null) {
+                    newCode = user.getSecondCode();
                 } else {
                     newCode = generateRandomSixCode();
-                    secondCode.put(username, newCode);
+                    user.setSecondCode(newCode);
+                    userDao.save(user);
                 }
                 return new MyMessage(1, newCode);
             } else {
                 return new MyMessage(0,"验证码不正确");
             }
         } else {
-            return new MyMessage(0,"此用户没有申请忘记密码");
+            return new MyMessage(0,"此用户没有申请忘记密码或验证码已过期");
         }
     }
 
     @Override
     public MyMessage resetPassword(String username, String password, String code) {
-        if (secondCode.containsKey(username)) {
-            if (secondCode.get(username).equals(code)) {
-                User user = userDao.findByUsername(username);
+        User user = userDao.findByUsername(username);
+        if (user == null) {
+            return new MyMessage(0, "无此用户");
+        }
+        if (!user.isState()) {
+            return new MyMessage(0,"用户未激活");
+        }
+        if (user.getSecondCode() != null&&user.getFirstCode()!=null) {
+            if (user.getSecondCode().equals(code)) {
                 user.setPassword(password);
+                user.setSecondCode(null);
+                user.setFirstCode(null);
                 userDao.save(user);
                 return new MyMessage(1,"密码修改成功");
             } else {
                 return new MyMessage(0,"次级验证码验证失败");
             }
         } else {
-            return new MyMessage(0, "用户未验证成功");
+            return new MyMessage(0, "用户未验证成功或验证码已过期");
+        }
+    }
+
+    @Override
+    public void checkCodeOutOfTime(String username) {
+        User user = userDao.findByUsername(username);
+        if(user != null) {
+            user.setFirstCode(null);
+            user.setSecondCode(null);
+            userDao.save(user);
         }
     }
 

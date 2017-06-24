@@ -19,4 +19,5 @@ public interface UserService {
     public MyMessage forgetPassword(String username);
     public MyMessage confirmCode(String username, String code);
     public MyMessage resetPassword(String username, String password, String code);
+    public void checkCodeOutOfTime(String username);
 }

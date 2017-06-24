@@ -30,6 +30,11 @@ public class User implements Serializable {
     @Column
     private String code; // 随机激活码
 
+    @Column
+    private String firstCode; //验证码
+    @Column
+    private String secondCode; //次级验证码
+
     public User() {
         state = NOT_ACTIVE;
     }
@@ -40,6 +45,8 @@ public class User implements Serializable {
         this.email = email;
         this.code = code;
         state = NOT_ACTIVE;
+        this.firstCode = null;
+        this.secondCode = null;
     }
 
     public int getId() {
@@ -99,5 +106,22 @@ public class User implements Serializable {
                 ", state=" + state +
                 ", code='" + code + '\'' +
                 '}';
+    }
+
+
+    public String getFirstCode() {
+        return firstCode;
+    }
+
+    public void setFirstCode(String firstCode) {
+        this.firstCode = firstCode;
+    }
+
+    public String getSecondCode() {
+        return secondCode;
+    }
+
+    public void setSecondCode(String secondCode) {
+        this.secondCode = secondCode;
     }
 }
